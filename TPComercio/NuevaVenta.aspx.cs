@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace TPComercio
 {
-    public partial class Compras : System.Web.UI.Page
+    public partial class NuevaVenta : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
