@@ -1,0 +1,96 @@
+USE [master]
+GO
+
+CREATE DATABASE [BDDComercio]
+GO
+
+USE [BDDComercio]
+GO
+
+CREATE TABLE Categorias (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Descripcion VARCHAR(100) NOT NULL
+)
+GO
+
+CREATE TABLE Marcas (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Descripcion VARCHAR(100) NOT NULL
+)
+GO
+
+CREATE TABLE Productos (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Codigo VARCHAR(50) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    StockActual INT NOT NULL,
+    StockMinimo INT NOT NULL,
+    PrecioCompraActual DECIMAL(18,2) NOT NULL,
+    PorcentajeGanancia DECIMAL(5,2) NOT NULL,
+    IdMarca INT NULL FOREIGN KEY REFERENCES Marcas(Id),
+    IdCategoria INT NULL FOREIGN KEY REFERENCES Categorias(Id)
+)
+GO
+
+CREATE TABLE Clientes (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    Apellido VARCHAR(100) NOT NULL,
+    Dni VARCHAR(20) NOT NULL,
+    Telefono VARCHAR(50) NULL,
+    Email VARCHAR(100) NULL
+)
+GO
+
+CREATE TABLE Proveedores (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    RazonSocial VARCHAR(100) NOT NULL,
+    Cuit VARCHAR(50) NOT NULL,
+    Telefono VARCHAR(50) NULL,
+    Email VARCHAR(100) NULL
+)
+GO
+
+CREATE TABLE Usuarios (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    NombreUsuario VARCHAR(50) NOT NULL,
+    Password VARCHAR(100) NOT NULL,
+    Rol VARCHAR(50) NOT NULL
+)
+GO
+
+CREATE TABLE Compras (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Fecha DATETIME NOT NULL,
+    IdProveedor INT NULL FOREIGN KEY REFERENCES Proveedores(Id),
+    Total DECIMAL(18,2) NOT NULL
+)
+GO
+
+CREATE TABLE Ventas (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Fecha DATETIME NOT NULL,
+    IdCliente INT NULL FOREIGN KEY REFERENCES Clientes(Id),
+    IdUsuario INT NULL FOREIGN KEY REFERENCES Usuarios(Id),
+    NumeroFactura VARCHAR(50) NULL,
+    Total DECIMAL(18,2) NOT NULL
+)
+GO
+
+CREATE TABLE DetalleCompras (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    IdCompra INT NOT NULL FOREIGN KEY REFERENCES Compras(Id),
+    IdProducto INT NOT NULL FOREIGN KEY REFERENCES Productos(Id),
+    Cantidad INT NOT NULL,
+    PrecioUnitario DECIMAL(18,2) NOT NULL
+)
+GO
+
+CREATE TABLE DetalleVentas (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    IdVenta INT NOT NULL FOREIGN KEY REFERENCES Ventas(Id),
+    IdProducto INT NOT NULL FOREIGN KEY REFERENCES Productos(Id),
+    Cantidad INT NOT NULL,
+    PrecioUnitario DECIMAL(18,2) NOT NULL
+)
+GO
