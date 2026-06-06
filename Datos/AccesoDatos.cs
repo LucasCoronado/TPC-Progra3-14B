@@ -19,21 +19,47 @@ namespace TPComercio.Datos
 
         public AccesoDatos()
         {
-            conexion = new SqlConnection(
-                "Data Source=.\\SQLEXPRESS;Initial Catalog=BDDComercio;Integrated Security=True");
+            conexion = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=BDDComercio;Integrated Security=True");
+            comando = new SqlCommand();
         }
 
         public void setearConsulta(string consulta)
         {
-            comando = new SqlCommand();
+            comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
-            comando.Connection = conexion;
         }
 
         public void ejecutarLectura()
         {
-            conexion.Open();
-            lector = comando.ExecuteReader();
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                lector = comando.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ejecutarAccion()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void setearParametro(string nombre, object valor)
+        {
+            comando.Parameters.AddWithValue(nombre, valor);
         }
 
         public void cerrarConexion()
