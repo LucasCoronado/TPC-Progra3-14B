@@ -1,17 +1,13 @@
-﻿using System;
+﻿using Dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace TPComercio.Dominio
 {
-    public class Venta
+    public class Venta : Operacion
     {
-        public int Id { get; set; }
-        public DateTime Fecha { get; set; }
-        public Cliente Cliente { get; set; }
-        public Usuario Usuario { get; set; }
-        public string NumeroFactura { get; set; }
-        public decimal Total { get; set; }
+        public Cliente ClienteAsociado { get; set; }
     }
 }
