@@ -2,50 +2,37 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="container mt-4">
+<asp:Content ID="Content2"
+ContentPlaceHolderID="MainContent"
+runat="server">
 
-        <div class="d-flex justify-content-between mb-3">
-            <h2>Proveedores</h2>
+<div class="bg-white p-6 rounded-xl shadow">
 
-            <asp:Button ID="btnNuevoProveedor"
-                runat="server"
-                Text="Nuevo Proveedor"
-                CssClass="btn btn-success" />
-        </div>
+<h2 class="text-2xl font-bold mb-5">
+Proveedores
+</h2>
 
-        <div class="card">
-            <div class="card-body">
+<div class="grid grid-cols-3 gap-4 mb-5">
 
-                <div class="row">
+<input type="text"
+placeholder="Proveedor"
+class="border p-2 rounded">
 
-                    <div class="col-md-6">
-                        <label>Razón Social</label>
-                        <asp:TextBox ID="txtRazonSocial"
-                            runat="server"
-                            CssClass="form-control">
-                        </asp:TextBox>
-                    </div>
+<input type="text"
+placeholder="CUIT"
+class="border p-2 rounded">
 
-                    <div class="col-md-6">
-                        <label>CUIT</label>
-                        <asp:TextBox ID="txtCuit"
-                            runat="server"
-                            CssClass="form-control">
-                        </asp:TextBox>
-                    </div>
+<button class="bg-slate-800 text-white rounded">
+Buscar
+</button>
 
-                </div>
+</div>
 
-            </div>
-        </div>
+<asp:GridView ID="dgvProveedores"
+runat="server"
+CssClass="table-auto w-full border">
+</asp:GridView>
 
-        <br />
+</div>
 
-        <asp:GridView ID="dgvProveedores"
-            runat="server"
-            CssClass="table table-striped">
-        </asp:GridView>
-
-    </div>
 </asp:Content>

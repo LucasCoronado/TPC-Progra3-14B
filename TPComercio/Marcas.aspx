@@ -2,39 +2,28 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="Content2"
+ContentPlaceHolderID="MainContent"
+runat="server">
 
-    <div class="row mt-5 mb-4 align-items-center">
-            <div class="col-8">
-                <h2>Gestión de Marcas</h2>
-                <p class="text-muted">Administrá las marcas de los productos del sistema.</p>
-            </div>
-            <div class="col-4 text-end">
-                <asp:Button ID="btnAgregarMarca" runat="server" Text="+ Agregar Marca" CssClass="btn btn-primary"  />
-            </div>
-        </div>
+<div class="bg-white p-6 rounded-xl shadow">
 
-       <div class="row">
-            <div class="col-12">
-                <div class="table-responsive shadow-sm rounded">
+<h2 class="text-2xl font-bold mb-5">
+Marcas
+</h2>
 
-                    <asp:GridView ID="dgvMarcas" runat="server" CssClass="table table-hover table-bordered mb-0"
-                        AutoGenerateColumns="false" DataKeyNames="Id">
+<input type="text"
+placeholder="Nombre de Marca"
+class="border p-2 rounded w-full mb-4">
 
-                        <Columns>
-                            <asp:BoundField DataField="Id" HeaderText="ID" ItemStyle-Width="10%" />
-                            <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+<button class="bg-blue-600 text-white px-4 py-2 rounded">
+Guardar
+</button>
+    <asp:GridView ID="dgvMarcas"
+    runat="server"
+    CssClass="table-auto w-full border mt-5">
+</asp:GridView>
 
-                            <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="20%" ItemStyle-CssClass="text-center">
-                                <ItemTemplate>
-                                    <asp:Button ID="btnEditar" runat="server" Text="✏️ Editar" CssClass="btn btn-sm btn-outline-secondary me-2" />
-                                    <asp:Button ID="btnEliminar" runat="server" Text="🗑️ Eliminar" CssClass="btn btn-sm btn-outline-danger" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                </div>
-            </div>
-        </div>
+</div>
 
 </asp:Content>
