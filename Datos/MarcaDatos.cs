@@ -41,5 +41,28 @@ namespace Datos
             }
         }
 
+        public void Agregar(Marca nueva)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                
+                datos.setearConsulta("INSERT INTO MARCAS (Descripcion)VALUES(@Descripcion)");
+                datos.setearParametro("@Descripcion", nueva.Descripcion);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }

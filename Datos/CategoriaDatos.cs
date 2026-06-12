@@ -41,5 +41,28 @@ namespace Datos
             }
         }
 
+        public void Agregar(Categoria nueva)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+
+                datos.setearConsulta("INSERT INTO CATEGORIAS (Descripcion)VALUES(@Descripcion)");
+                datos.setearParametro("@Descripcion", nueva.Descripcion);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
