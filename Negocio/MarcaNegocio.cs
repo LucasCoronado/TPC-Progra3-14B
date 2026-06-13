@@ -17,5 +17,16 @@ namespace Negocio
             return datos.ListarTodos();
         }
 
+        public void Agregar(Marca nueva)
+        {
+            if (string.IsNullOrWhiteSpace(nueva.Descripcion))
+            {
+                throw new Exception("El nombre de la marca no puede estar vacio.");
+            }
+
+            MarcaDatos datos = new MarcaDatos();
+            datos.Agregar(nueva);
+        }
+
     }
 }

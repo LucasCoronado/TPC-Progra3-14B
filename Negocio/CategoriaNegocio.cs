@@ -18,5 +18,16 @@ namespace Negocio
             return datos.ListarTodos();
         }
 
+        public void Agregar(Categoria nueva)
+        {
+            if (string.IsNullOrWhiteSpace(nueva.Descripcion))
+            {
+                throw new Exception("El nombre de la categoria no puede estar vacio.");
+            }
+
+            CategoriaDatos datos = new CategoriaDatos();
+            datos.Agregar(nueva);
+        }
+
     }
 }
