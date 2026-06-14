@@ -14,7 +14,10 @@ namespace TPComercio
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            if (!IsPostBack)
+            {
+                CargarGrilla();
+            }
         }
 
         protected void btnAgregarMarca_Click(object sender, EventArgs e)
