@@ -13,14 +13,17 @@
 
         <asp:TextBox runat="server" ID="txtNuevaCategoria" CssClass="border p-2 rounded w-full mb-4" placeholder="Nombre de Categoria" />
 
-        <asp:Button Text="Agregar" ID="btnAgregarCategoria" OnClick="btnAgregarCategoria_Click" runat="server" CssClass="bg-blue-600 text-white px-4 py-2 rounded" />
+        <asp:Button Text="Agregar" ID="btnAgregarCategoria" OnClick="btnAgregarCategoria_Click" runat="server" CssClass="bg-blue-600 text-white px-4 py-2 rounded mb-5 mt-5" />
 
-        <asp:Label ID="lblError" runat="server" Text=""></asp:Label>
-
-        <asp:GridView ID="dgvCategorias"
-            runat="server"
-            CssClass="table-auto w-full border mt-5">
-        </asp:GridView>
+    <div class="mb-4">
+        <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
+    </div>
+            <asp:GridView ID="dgvCategorias" runat="server" CssClass="table-auto w-full border" AutoGenerateColumns="false">
+    <Columns>
+        <asp:BoundField DataField="Id" HeaderText="ID" Visible="false" />
+        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+    </Columns>
+</asp:GridView>
 
     </div>
 

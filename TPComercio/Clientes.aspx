@@ -23,11 +23,18 @@ Clientes
 
      <asp:Button Text="Nuevo Cliente" ID="btnAgregarCliente" OnClick="btnAgregarCliente_Click" runat="server" CssClass="bg-green-600 text-white px-4 py-2 rounded mb-5"/>
 
-     <asp:Label ID="lblError" runat="server" Text=""></asp:Label>
-
-<asp:GridView ID="dgvClientes"
-runat="server"
-CssClass="table-auto w-full border">
+    <div class="mb-4">
+        <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
+    </div>
+    <asp:GridView ID="dgvClientes" runat="server" CssClass="table-auto w-full border" AutoGenerateColumns="false">
+    <Columns>
+        <asp:BoundField DataField="Id" HeaderText="ID" Visible="false" />
+        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+        <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+        <asp:BoundField DataField="Dni" HeaderText="Dni" />
+        <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
+        <asp:BoundField DataField="Email" HeaderText="Email" />
+    </Columns>
 </asp:GridView>
 
 </div>

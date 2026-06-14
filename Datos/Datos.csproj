@@ -47,6 +47,7 @@
     <Compile Include="MarcaDatos.cs" />
     <Compile Include="ProductoDatos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProveedorDatos.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ScriptBD\CreacionDeBDD.sql" />

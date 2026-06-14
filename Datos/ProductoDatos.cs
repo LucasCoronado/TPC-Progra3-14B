@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TPComercio.Datos;
 using TPComercio.Dominio;
 
@@ -19,6 +16,7 @@ namespace Datos
             {
                 datos.setearConsulta("SELECT Id, Codigo, Nombre, StockActual FROM Productos");
                 datos.ejecutarLectura();
+
                 while (datos.Lector.Read())
                 {
                     Producto aux = new Producto();
@@ -31,6 +29,38 @@ namespace Datos
                     lista.Add(aux);
                 }
                 return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void Agregar(Producto nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = "INSERT INTO Productos (Codigo, Nombre, StockActual, StockMinimo, PrecioCompraActual, PorcentajeGanancia, IdMarca, IdCategoria) " +
+                                  "VALUES (@Codigo, @Nombre, @StockActual, @StockMinimo, @PrecioCompra, @Porcentaje, @IdMarca, @IdCategoria)";
+
+                datos.setearConsulta(consulta);
+
+                datos.setearParametro("@Codigo", nuevo.Codigo);
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@StockActual", nuevo.StockActual);
+                datos.setearParametro("@StockMinimo", nuevo.StockMinimo);
+                datos.setearParametro("@PrecioCompra", nuevo.PrecioCompraActual);
+                datos.setearParametro("@Porcentaje", nuevo.PorcentajeGanancia);
+                datos.setearParametro("@IdMarca", nuevo.Marca.Id);
+                datos.setearParametro("@IdCategoria", nuevo.Categoria.Id);
+
+                datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
