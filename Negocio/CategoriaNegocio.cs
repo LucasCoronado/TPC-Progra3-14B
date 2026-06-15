@@ -29,5 +29,26 @@ namespace Negocio
             datos.Agregar(nueva);
         }
 
+        public void Modificar(Categoria categoriaModificada)
+        {
+            if (string.IsNullOrWhiteSpace(categoriaModificada.Descripcion))
+            {
+                throw new Exception("El nombre de la categoría no puede estar vacío.");
+            }
+
+            CategoriaDatos datos = new CategoriaDatos();
+
+            List<Categoria> listaCategorias = Listar();
+
+            bool existe = listaCategorias.Any(c => c.Descripcion.ToUpper() == categoriaModificada.Descripcion.ToUpper() && 
+            c.Id != categoriaModificada.Id);
+
+            if (existe)
+            {
+                throw new Exception("Ya existe una categoria con ese nombre");
+            }
+
+            datos.Modificar(categoriaModificada);
+        }
     }
 }
