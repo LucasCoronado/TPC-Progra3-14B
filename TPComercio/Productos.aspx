@@ -17,8 +17,9 @@
         <asp:TextBox runat="server" ID="txtStockMinimo" CssClass="border p-2 rounded w-full" placeholder="Stock Mínimo"/>
         <asp:TextBox runat="server" ID="txtPrecioCompra" CssClass="border p-2 rounded w-full" placeholder="Precio Compra"/>
         <asp:TextBox runat="server" ID="txtPorcentaje" CssClass="border p-2 rounded w-full" placeholder="% Ganancia"/>
-        <asp:TextBox runat="server" ID="txtIdMarca" CssClass="border p-2 rounded w-full" placeholder="ID Marca"/>
-        <asp:TextBox runat="server" ID="txtIdCategoria" CssClass="border p-2 rounded w-full" placeholder="ID Categoría"/>
+        <asp:DropDownList runat="server" ID="ddlMarcas" CssClass="form-select"></asp:DropDownList>
+        <asp:DropDownList runat="server" ID="ddlCategorias" CssClass="form-select"></asp:DropDownList>
+
     </div>
 
     <asp:Button Text="Nuevo Producto" ID="btnAgregarProducto" OnClick="btnAgregarProducto_Click" runat="server" CssClass="bg-blue-600 text-white px-4 py-2 rounded mb-5"/>

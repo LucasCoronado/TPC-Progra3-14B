@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio;
+using System;
 using TPComercio.Dominio;
 using TPComercio.Negocio;
 
@@ -11,6 +12,10 @@ namespace TPComercio
             if (!IsPostBack)
             {
                 CargarGrilla();
+
+                CargarDdlMarcas();
+                CargarDdlCategorias();
+
             }
         }
 
@@ -28,10 +33,10 @@ namespace TPComercio
                 nuevo.PrecioCompraActual = decimal.Parse(txtPrecioCompra.Text);
                 nuevo.PorcentajeGanancia = decimal.Parse(txtPorcentaje.Text);
                 nuevo.Marca = new Marca();
-                nuevo.Marca.Id = int.Parse(txtIdMarca.Text);
+                nuevo.Marca.Id = int.Parse(ddlMarcas.SelectedValue);
 
                 nuevo.Categoria = new Categoria();
-                nuevo.Categoria.Id = int.Parse(txtIdCategoria.Text);
+                nuevo.Categoria.Id = int.Parse(ddlCategorias.SelectedValue);
 
                 ProductoNegocio negocio = new ProductoNegocio();
                 negocio.Agregar(nuevo);
@@ -43,14 +48,12 @@ namespace TPComercio
                 txtStockMinimo.Text = "";
                 txtPrecioCompra.Text = "";
                 txtPorcentaje.Text = "";
-                txtIdMarca.Text = "";
-                txtIdCategoria.Text = "";
-
+                
                 CargarGrilla();
             }
             catch (FormatException)
             {
-                lblError.Text = "Error: Por favor, ingrese valores numéricos válidos en Stock, Precios y IDs.";
+                lblError.Text = "Error: Por favor, ingrese valores numéricos válidos en Stock y Precios.";
             }
             catch (Exception ex)
             {
@@ -64,5 +67,23 @@ namespace TPComercio
             dgvProductos.DataSource = negocio.listar();
             dgvProductos.DataBind();
         }
+
+        private void CargarDdlMarcas()
+        {
+            MarcaNegocio negocio = new MarcaNegocio();
+            ddlMarcas.DataSource = negocio.Listar();
+            ddlMarcas.DataTextField = "Descripcion";
+            ddlMarcas.DataValueField = "Id";
+            ddlMarcas.DataBind();
+        }
+        private void CargarDdlCategorias()
+        {
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            ddlCategorias.DataSource = negocio.Listar();
+            ddlCategorias.DataTextField = "Descripcion";
+            ddlCategorias.DataValueField = "Id";
+            ddlCategorias.DataBind();
+        }
+
     }
 }
