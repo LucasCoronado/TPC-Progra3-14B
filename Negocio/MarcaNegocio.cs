@@ -28,5 +28,27 @@ namespace Negocio
             datos.Agregar(nueva);
         }
 
+        public void Modificar(Marca marcaModificada)
+        {
+            if (string.IsNullOrWhiteSpace(marcaModificada.Descripcion))
+            {
+                throw new Exception("El nombre de la marca no puede estar vacío.");
+            }
+
+            MarcaDatos datos = new MarcaDatos();
+
+            List<Marca> listaMarcas = Listar();
+
+            bool existe = listaMarcas.Any(c => c.Descripcion.ToUpper() == marcaModificada.Descripcion.ToUpper() &&
+            c.Id != marcaModificada.Id);
+
+            if (existe)
+            {
+                throw new Exception("Ya existe una marca con ese nombre");
+            }
+
+            datos.Modificar(marcaModificada);
+        }
+
     }
 }

@@ -15,15 +15,39 @@
 
         <asp:Button Text="Agregar" ID="btnAgregarMarca" OnClick="btnAgregarMarca_Click" runat="server" CssClass="bg-blue-600 text-white px-4 py-2 rounded mb-5 mt-5"/>
 
-    <div class="mb-4">
-        <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
-    </div>
-        <asp:GridView ID="dgvMarcas" runat="server" CssClass="table-auto w-full border" AutoGenerateColumns="false">
-    <Columns>
-        <asp:BoundField DataField="Id" HeaderText="ID" Visible="false" />
-        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
-    </Columns>
-</asp:GridView>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
+        <div class="mb-4">
+            <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
+        </div>
+
+        <asp:GridView ID="dgvMarcas" runat="server" CssClass="table table-auto w-full border"
+            AutoGenerateColumns="false" DataKeyNames="Id"
+            OnRowEditing="dgvMarcas_RowEditing"
+            OnRowCancelingEdit="dgvMarcas_RowCancelingEdit"
+            OnRowUpdating="dgvMarcas_RowUpdating">
+            <Columns>
+                <asp:BoundField DataField="Id" HeaderText="ID" ReadOnly="true" />
+                <asp:BoundField DataField="Descripcion" HeaderText="Descripción" ControlStyle-CssClass="borde-edicion" />
+
+                <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="20%">
+
+                    <ItemTemplate>
+                        <asp:Button ID="btnEditar" runat="server" Text="✏️ Editar" CssClass="btn btn-sm btn-outline-secondary me-2" CommandName="Edit" />
+
+                    </ItemTemplate>
+
+                    <EditItemTemplate>
+                        <asp:Button ID="btnGuardar" runat="server" Text="💾 Guardar" CssClass="btn btn-sm btn-success me-2" CommandName="Update" />
+                        <asp:Button ID="btnCancelar" runat="server" Text="❌ Cancelar" CssClass="btn btn-sm btn-danger" CommandName="Cancel" />
+                    </EditItemTemplate>
+
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+
+    </ContentTemplate>
+</asp:UpdatePanel>
 
     </div>
 

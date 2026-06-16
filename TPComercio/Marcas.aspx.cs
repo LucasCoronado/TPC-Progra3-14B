@@ -52,5 +52,44 @@ namespace TPComercio
             dgvMarcas.DataBind();
         }
 
+        protected void dgvMarcas_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            dgvMarcas.EditIndex = e.NewEditIndex;
+            CargarGrilla();
+        }
+
+        protected void dgvMarcas_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            dgvMarcas.EditIndex = -1;
+            CargarGrilla();
+        }
+
+        protected void dgvMarcas_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(dgvMarcas.DataKeys[e.RowIndex].Value);
+
+                GridViewRow fila = dgvMarcas.Rows[e.RowIndex];
+                TextBox txtDescripcion = (TextBox)fila.Cells[1].Controls[0];
+
+
+                Marca marcaModificada = new Marca();
+                marcaModificada.Id = id;
+                marcaModificada.Descripcion = txtDescripcion.Text;
+
+                MarcaNegocio negocio = new MarcaNegocio();
+                negocio.Modificar(marcaModificada);
+
+                dgvMarcas.EditIndex = -1;
+                CargarGrilla();
+                lblError.Text = "";
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Ocurrió un error al guardar: " + ex.Message;
+            }
+        }
+
     }
 }

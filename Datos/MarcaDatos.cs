@@ -47,7 +47,7 @@ namespace Datos
 
             try
             {
-                
+
                 datos.setearConsulta("INSERT INTO MARCAS (Descripcion)VALUES(@Descripcion)");
                 datos.setearParametro("@Descripcion", nueva.Descripcion);
                 datos.ejecutarAccion();
@@ -62,6 +62,32 @@ namespace Datos
             {
                 datos.cerrarConexion();
             }
+        }
+
+        public void Modificar(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+
+                datos.setearConsulta("UPDATE Marcas SET Descripcion = @Descripcion WHERE Id = @Id");
+                datos.setearParametro("@Descripcion", marca.Descripcion);
+                datos.setearParametro("@Id", marca.Id);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+
         }
 
     }

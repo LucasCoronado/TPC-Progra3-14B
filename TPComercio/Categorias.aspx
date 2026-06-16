@@ -1,16 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Categorias.aspx.cs" Inherits="TPComercio.Categorias" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        .borde-edicion {
-            border: 1px solid #0d6efd !important;
-            background-color: #f8f9fa !important;
-            box-sizing: border-box;
-            width: 50%;
-            padding: 0px;
-            outline: none;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2"
     ContentPlaceHolderID="MainContent"
