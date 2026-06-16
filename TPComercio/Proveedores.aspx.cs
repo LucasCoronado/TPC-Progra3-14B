@@ -1,6 +1,5 @@
-﻿using Negocio;
-using System;
-using System.Web.UI;
+﻿using System;
+using System.Web.UI.WebControls;
 using TPComercio.Dominio;
 using TPComercio.Negocio;
 
@@ -49,6 +48,50 @@ namespace TPComercio
             ProveedorNegocio negocio = new ProveedorNegocio();
             dgvProveedores.DataSource = negocio.Listar();
             dgvProveedores.DataBind();
+        }
+
+        protected void dgvProveedores_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            dgvProveedores.EditIndex = e.NewEditIndex;
+            CargarGrilla();
+        }
+
+        protected void dgvProveedores_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            dgvProveedores.EditIndex = -1;
+            CargarGrilla();
+        }
+
+        protected void dgvProveedores_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(dgvProveedores.DataKeys[e.RowIndex].Value);
+
+                GridViewRow fila = dgvProveedores.Rows[e.RowIndex];
+                TextBox txtGridRazonSocial = (TextBox)fila.Cells[1].Controls[0];
+                TextBox txtGridCuit = (TextBox)fila.Cells[2].Controls[0];
+                TextBox txtGridTelefono = (TextBox)fila.Cells[3].Controls[0];
+                TextBox txtGridEmail = (TextBox)fila.Cells[4].Controls[0];
+
+                Proveedor proveedorModificado = new Proveedor();
+                proveedorModificado.Id = id;
+                proveedorModificado.RazonSocial = txtGridRazonSocial.Text;
+                proveedorModificado.Cuit = txtGridCuit.Text;
+                proveedorModificado.Telefono = txtGridTelefono.Text;
+                proveedorModificado.Email = txtGridEmail.Text;
+
+                ProveedorNegocio negocio = new ProveedorNegocio();
+                negocio.Modificar(proveedorModificado);
+
+                dgvProveedores.EditIndex = -1;
+                CargarGrilla();
+                lblError.Text = "";
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Ocurrió un error al guardar: " + ex.Message;
+            }
         }
     }
 }

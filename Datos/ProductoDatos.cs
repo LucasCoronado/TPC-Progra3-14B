@@ -71,5 +71,27 @@ namespace Datos
                 datos.cerrarConexion();
             }
         }
+
+        public void Modificar(Producto producto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Productos SET Codigo = @Codigo, Nombre = @Nombre, StockActual = @StockActual WHERE Id = @Id");
+                datos.setearParametro("@Codigo", producto.Codigo);
+                datos.setearParametro("@Nombre", producto.Nombre);
+                datos.setearParametro("@StockActual", producto.StockActual);
+                datos.setearParametro("@Id", producto.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

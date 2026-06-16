@@ -1,9 +1,5 @@
-﻿using Negocio;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using TPComercio.Dominio;
 using TPComercio.Negocio;
@@ -16,18 +12,29 @@ namespace TPComercio
         {
             if (!IsPostBack)
             {
-                CargarGrilla();
+                ActualizarSesionYGrilla();
             }
+        }
 
+        private void ActualizarSesionYGrilla()
+        {
+            ClienteNegocio negocio = new ClienteNegocio();
+            List<Cliente> lista = negocio.Listar();
+            Session.Add("ListaClientes", lista);
+            CargarGrilla(lista);
+        }
+
+        private void CargarGrilla(List<Cliente> lista)
+        {
+            dgvClientes.DataSource = lista;
+            dgvClientes.DataBind();
         }
 
         protected void btnAgregarCliente_Click(object sender, EventArgs e)
         {
-
             try
             {
                 lblError.Text = "";
-
                 Cliente nueva = new Cliente();
                 nueva.Nombre = txtNombreCliente.Text;
                 nueva.Apellido = txtApellidoCliente.Text;
@@ -44,23 +51,76 @@ namespace TPComercio
                 txtTelefonoCliente.Text = "";
                 txtEmailCliente.Text = "";
 
-                CargarGrilla();
-
+                ActualizarSesionYGrilla();
             }
             catch (Exception ex)
             {
-
                 lblError.Text = "Error: " + ex.Message;
             }
-
         }
 
-
-        private void CargarGrilla()
+        protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            ClienteNegocio negocio = new ClienteNegocio();
-            dgvClientes.DataSource = negocio.Listar();
-            dgvClientes.DataBind();
+            List<Cliente> listaGuardada = (List<Cliente>)Session["ListaClientes"];
+            string filtro = txtFiltro.Text.ToUpper();
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                List<Cliente> listaFiltrada = listaGuardada.FindAll(x =>
+                    x.Apellido.ToUpper().Contains(filtro) ||
+                    x.Dni.Contains(filtro));
+                CargarGrilla(listaFiltrada);
+            }
+            else
+            {
+                CargarGrilla(listaGuardada);
+            }
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = "";
+            CargarGrilla((List<Cliente>)Session["ListaClientes"]);
+        }
+
+        protected void dgvClientes_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            dgvClientes.EditIndex = e.NewEditIndex;
+            btnBuscar_Click(null, null);
+        }
+
+        protected void dgvClientes_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            dgvClientes.EditIndex = -1;
+            btnBuscar_Click(null, null);
+        }
+
+        protected void dgvClientes_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(dgvClientes.DataKeys[e.RowIndex].Value);
+                GridViewRow fila = dgvClientes.Rows[e.RowIndex];
+
+                Cliente clienteModificado = new Cliente();
+                clienteModificado.Id = id;
+                clienteModificado.Nombre = ((TextBox)fila.Cells[1].Controls[0]).Text;
+                clienteModificado.Apellido = ((TextBox)fila.Cells[2].Controls[0]).Text;
+                clienteModificado.Dni = ((TextBox)fila.Cells[3].Controls[0]).Text;
+                clienteModificado.Telefono = ((TextBox)fila.Cells[4].Controls[0]).Text;
+                clienteModificado.Email = ((TextBox)fila.Cells[5].Controls[0]).Text;
+
+                ClienteNegocio negocio = new ClienteNegocio();
+                negocio.Modificar(clienteModificado);
+
+                dgvClientes.EditIndex = -1;
+                ActualizarSesionYGrilla();
+                lblError.Text = "";
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Ocurrió un error al guardar: " + ex.Message;
+            }
         }
     }
 }

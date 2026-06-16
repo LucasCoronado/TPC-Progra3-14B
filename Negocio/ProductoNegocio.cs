@@ -34,5 +34,20 @@ namespace TPComercio.Negocio
             ProductoDatos datos = new ProductoDatos();
             datos.Agregar(nuevo);
         }
+
+        public void Modificar(Producto modificado)
+        {
+            if (string.IsNullOrWhiteSpace(modificado.Codigo))
+                throw new Exception("El Código del producto no puede estar vacío.");
+
+            if (string.IsNullOrWhiteSpace(modificado.Nombre))
+                throw new Exception("El Nombre del producto no puede estar vacío.");
+
+            if (modificado.StockActual < 0)
+                throw new Exception("El stock no puede ser negativo.");
+
+            ProductoDatos datos = new ProductoDatos();
+            datos.Modificar(modificado);
+        }
     }
 }

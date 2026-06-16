@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TPComercio.Datos; // Tu clase AccesoDatos
+using TPComercio.Datos;
 using TPComercio.Dominio;
 
 namespace Datos
@@ -57,6 +57,31 @@ namespace Datos
             catch (Exception)
             {
                 throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void Modificar(Proveedor proveedor)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE PROVEEDORES SET RazonSocial = @RazonSocial, Cuit = @Cuit, Telefono = @Telefono, Email = @Email WHERE Id = @Id");
+
+                datos.setearParametro("@RazonSocial", proveedor.RazonSocial);
+                datos.setearParametro("@Cuit", proveedor.Cuit);
+                datos.setearParametro("@Telefono", proveedor.Telefono);
+                datos.setearParametro("@Email", proveedor.Email);
+                datos.setearParametro("@Id", proveedor.Id);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             finally
             {

@@ -45,5 +45,20 @@ namespace TPComercio.Negocio
             ClienteDatos datos = new ClienteDatos();
             datos.Agregar(nuevo);
         }
+
+        public void Modificar(Cliente modificado)
+        {
+            if (string.IsNullOrWhiteSpace(modificado.Nombre))
+                throw new Exception("El Nombre del cliente no puede estar vacío.");
+
+            if (string.IsNullOrWhiteSpace(modificado.Apellido))
+                throw new Exception("El Apellido del cliente no puede estar vacío.");
+
+            if (string.IsNullOrWhiteSpace(modificado.Dni))
+                throw new Exception("El DNI del cliente no puede estar vacío.");
+
+            ClienteDatos datos = new ClienteDatos();
+            datos.Modificar(modificado);
+        }
     }
 }

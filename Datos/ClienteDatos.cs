@@ -72,5 +72,29 @@ namespace Datos
             }
         }
 
+        public void Modificar(Cliente cliente)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Clientes SET Nombre = @Nombre, Apellido = @Apellido, Dni = @Dni, Telefono = @Telefono, Email = @Email WHERE Id = @Id");
+                datos.setearParametro("@Nombre", cliente.Nombre);
+                datos.setearParametro("@Apellido", cliente.Apellido);
+                datos.setearParametro("@Dni", cliente.Dni);
+                datos.setearParametro("@Telefono", cliente.Telefono);
+                datos.setearParametro("@Email", cliente.Email);
+                datos.setearParametro("@Id", cliente.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
