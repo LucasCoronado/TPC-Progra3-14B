@@ -14,6 +14,7 @@ namespace TPComercio.Dominio
         public int StockMinimo { get; set; }
         public decimal PrecioCompraActual { get; set; }
         public decimal PorcentajeGanancia { get; set; }
+        public bool Activo { get; set; }
 
         public Marca Marca { get; set; }
         public Categoria Categoria { get; set; }

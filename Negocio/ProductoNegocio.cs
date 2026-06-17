@@ -49,5 +49,18 @@ namespace TPComercio.Negocio
             ProductoDatos datos = new ProductoDatos();
             datos.Modificar(modificado);
         }
+
+        public void Eliminar(int id)
+        {
+            try
+            {
+                ProductoDatos datos = new ProductoDatos();
+                datos.Eliminar(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

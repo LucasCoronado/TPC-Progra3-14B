@@ -15,62 +15,67 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="bg-white p-6 rounded-xl shadow">
+    <div class="bg-white p-6 rounded-xl shadow">
 
-    <h2 class="text-2xl font-bold mb-5">Gestión de Productos</h2>
+        <h2 class="text-2xl font-bold mb-5">Gestión de Productos</h2>
 
-    <div class="grid grid-cols-4 gap-4 mb-5">
-        <asp:TextBox runat="server" ID="txtCodigo" CssClass="border p-2 rounded w-full" placeholder="Código"/>
-        <asp:TextBox runat="server" ID="txtNombre" CssClass="border p-2 rounded w-full" placeholder="Nombre"/>
-        <asp:TextBox runat="server" ID="txtStockActual" CssClass="border p-2 rounded w-full" placeholder="Stock Actual"/>
-        <asp:TextBox runat="server" ID="txtStockMinimo" CssClass="border p-2 rounded w-full" placeholder="Stock Mínimo"/>
-        <asp:TextBox runat="server" ID="txtPrecioCompra" CssClass="border p-2 rounded w-full" placeholder="Precio Compra"/>
-        <asp:TextBox runat="server" ID="txtPorcentaje" CssClass="border p-2 rounded w-full" placeholder="% Ganancia"/>
-        <asp:DropDownList runat="server" ID="ddlMarcas" CssClass="form-select border p-2 rounded w-full"></asp:DropDownList>
-        <asp:DropDownList runat="server" ID="ddlCategorias" CssClass="form-select border p-2 rounded w-full"></asp:DropDownList>
+        <div class="grid grid-cols-4 gap-4 mb-5">
+            <asp:TextBox runat="server" ID="txtCodigo" CssClass="border p-2 rounded w-full" placeholder="Código" />
+            <asp:TextBox runat="server" ID="txtNombre" CssClass="border p-2 rounded w-full" placeholder="Nombre" />
+            <asp:TextBox runat="server" ID="txtStockActual" CssClass="border p-2 rounded w-full" placeholder="Stock Actual" />
+            <asp:TextBox runat="server" ID="txtStockMinimo" CssClass="border p-2 rounded w-full" placeholder="Stock Mínimo" />
+            <asp:TextBox runat="server" ID="txtPrecioCompra" CssClass="border p-2 rounded w-full" placeholder="Precio Compra" />
+            <asp:TextBox runat="server" ID="txtPorcentaje" CssClass="border p-2 rounded w-full" placeholder="% Ganancia" />
+            <asp:DropDownList runat="server" ID="ddlMarcas" CssClass="form-select border p-2 rounded w-full"></asp:DropDownList>
+            <asp:DropDownList runat="server" ID="ddlCategorias" CssClass="form-select border p-2 rounded w-full"></asp:DropDownList>
+        </div>
+
+        <asp:Button Text="Nuevo Producto" ID="btnAgregarProducto" OnClick="btnAgregarProducto_Click" runat="server" CssClass="bg-blue-600 text-white px-4 py-2 rounded mb-5" />
+
+        <hr class="mb-5" />
+
+        <asp:Panel runat="server" DefaultButton="btnBuscar" CssClass="flex gap-4 mb-5 bg-gray-50 p-4 rounded border">
+            <asp:TextBox runat="server" ID="txtFiltro" CssClass="border p-2 rounded w-full" placeholder="Buscar por Nombre o Código..." />
+            <asp:Button Text="Buscar" ID="btnBuscar" OnClick="btnBuscar_Click" runat="server" CssClass="bg-slate-800 text-white px-4 py-2 rounded" />
+            <asp:Button Text="Limpiar" ID="btnLimpiar" OnClick="btnLimpiar_Click" runat="server" CssClass="bg-gray-500 text-white px-4 py-2 rounded" />
+        </asp:Panel>
+
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+                <div class="mb-4">
+                    <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
+                </div>
+
+                <asp:GridView ID="dgvProductos" runat="server" CssClass="table table-auto w-full border"
+                    AutoGenerateColumns="false" DataKeyNames="Id"
+                    OnRowEditing="dgvProductos_RowEditing"
+                    OnRowCancelingEdit="dgvProductos_RowCancelingEdit"
+                    OnRowUpdating="dgvProductos_RowUpdating"
+                    OnRowDeleting="dgvProductos_RowDeleting">
+                    <Columns>
+                        <asp:BoundField DataField="Id" HeaderText="ID" Visible="false" ReadOnly="true" />
+                        <asp:BoundField DataField="Codigo" HeaderText="Código" ControlStyle-CssClass="borde-edicion" />
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" ControlStyle-CssClass="borde-edicion" />
+                        <asp:BoundField DataField="StockActual" HeaderText="Stock Actual" ControlStyle-CssClass="borde-edicion" />
+
+                        <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="20%">
+                            <ItemTemplate>
+
+                                <asp:Button ID="btnEditar" runat="server" Text="✏️ Editar" CssClass="btn btn-sm btn-outline-secondary me-2" CommandName="Edit" />
+
+                                <asp:Button ID="btnEliminar" runat="server" Text="🗑️ Eliminar" CssClass="btn btn-sm btn-outline-danger" CommandName="Delete" OnClientClick="return confirm('¿Seguro que deseas eliminar esta marca?');" />
+
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:Button ID="btnGuardar" runat="server" Text="💾 Guardar" CssClass="btn btn-sm btn-success me-2" CommandName="Update" />
+                                <asp:Button ID="btnCancelar" runat="server" Text="❌ Cancelar" CssClass="btn btn-sm btn-danger" CommandName="Cancel" />
+                            </EditItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
     </div>
-
-    <asp:Button Text="Nuevo Producto" ID="btnAgregarProducto" OnClick="btnAgregarProducto_Click" runat="server" CssClass="bg-blue-600 text-white px-4 py-2 rounded mb-5"/>
-    
-    <hr class="mb-5" />
-
-    <asp:Panel runat="server" DefaultButton="btnBuscar" CssClass="flex gap-4 mb-5 bg-gray-50 p-4 rounded border">
-        <asp:TextBox runat="server" ID="txtFiltro" CssClass="border p-2 rounded w-full" placeholder="Buscar por Nombre o Código..." />
-        <asp:Button Text="Buscar" ID="btnBuscar" OnClick="btnBuscar_Click" runat="server" CssClass="bg-slate-800 text-white px-4 py-2 rounded" />
-        <asp:Button Text="Limpiar" ID="btnLimpiar" OnClick="btnLimpiar_Click" runat="server" CssClass="bg-gray-500 text-white px-4 py-2 rounded" />
-    </asp:Panel>
-
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
-            <div class="mb-4">
-                <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
-            </div>
-
-            <asp:GridView ID="dgvProductos" runat="server" CssClass="table-auto w-full border" 
-                AutoGenerateColumns="false" DataKeyNames="Id"
-                OnRowEditing="dgvProductos_RowEditing"
-                OnRowCancelingEdit="dgvProductos_RowCancelingEdit"
-                OnRowUpdating="dgvProductos_RowUpdating">
-                <Columns>
-                    <asp:BoundField DataField="Id" HeaderText="ID" Visible="false" ReadOnly="true" />
-                    <asp:BoundField DataField="Codigo" HeaderText="Código" ControlStyle-CssClass="borde-edicion" />
-                    <asp:BoundField DataField="Nombre" HeaderText="Nombre" ControlStyle-CssClass="borde-edicion" />
-                    <asp:BoundField DataField="StockActual" HeaderText="Stock Actual" ControlStyle-CssClass="borde-edicion" />
-                    
-                    <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="20%">
-                        <ItemTemplate>
-                            <asp:Button ID="btnEditar" runat="server" Text="✏️ Editar" CssClass="btn btn-sm btn-outline-secondary me-2" CommandName="Edit" />
-                        </ItemTemplate>
-                        <EditItemTemplate>
-                            <asp:Button ID="btnGuardar" runat="server" Text="💾 Guardar" CssClass="btn btn-sm btn-success me-2" CommandName="Update" />
-                            <asp:Button ID="btnCancelar" runat="server" Text="❌ Cancelar" CssClass="btn btn-sm btn-danger" CommandName="Cancel" />
-                        </EditItemTemplate>
-                    </asp:TemplateField>
-                </Columns>
-            </asp:GridView>
-        </ContentTemplate>
-    </asp:UpdatePanel>
-
-</div>
 
 </asp:Content>

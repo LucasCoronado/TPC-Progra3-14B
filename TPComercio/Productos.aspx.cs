@@ -150,5 +150,22 @@ namespace TPComercio
                 lblError.Text = "Ocurrió un error al guardar: " + ex.Message;
             }
         }
+
+        protected void dgvProductos_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(dgvProductos.DataKeys[e.RowIndex].Value);
+
+                ProductoNegocio negocio = new ProductoNegocio();
+                negocio.Eliminar(id);
+
+                ActualizarSesionYGrilla();
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Error al eliminar: " + ex.Message;
+            }
+        }
     }
 }
