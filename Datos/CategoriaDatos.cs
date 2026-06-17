@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +18,7 @@ namespace Datos
 
             try
             {
-                datos.setearConsulta("Select Id, Descripcion from Categorias");
+                datos.setearConsulta("Select Id, Descripcion, Activo from Categorias WHERE Activo = 1");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -26,6 +26,7 @@ namespace Datos
                     Categoria aux = new Categoria();
                     aux.Id = (int)datos.Lector["Id"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
 
                     lista.Add(aux);
                 }
@@ -48,7 +49,7 @@ namespace Datos
             try
             {
 
-                datos.setearConsulta("INSERT INTO CATEGORIAS (Descripcion)VALUES(@Descripcion)");
+                datos.setearConsulta("INSERT INTO CATEGORIAS (Descripcion, Activo) VALUES (@Descripcion, 1)");
                 datos.setearParametro("@Descripcion", nueva.Descripcion);
                 datos.ejecutarAccion();
 
@@ -81,6 +82,24 @@ namespace Datos
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Categorias SET Activo = 0 WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
             finally

@@ -1,4 +1,4 @@
-﻿using Datos;
+using Datos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +49,19 @@ namespace Negocio
             }
 
             datos.Modificar(categoriaModificada);
+        }
+
+        public void Eliminar(int id)
+        {
+            try
+            {
+                CategoriaDatos datos = new CategoriaDatos();
+                datos.Eliminar(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

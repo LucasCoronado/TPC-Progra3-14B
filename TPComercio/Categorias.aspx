@@ -26,7 +26,8 @@
                     AutoGenerateColumns="false" DataKeyNames="Id"
                     OnRowEditing="dgvCategorias_RowEditing"
                     OnRowCancelingEdit="dgvCategorias_RowCancelingEdit"
-                    OnRowUpdating="dgvCategorias_RowUpdating">
+                    OnRowUpdating="dgvCategorias_RowUpdating"
+                    OnRowDeleting="dgvCategorias_RowDeleting">
                     <Columns>
                         <asp:BoundField DataField="Id" HeaderText="ID" ReadOnly="true" />
                         <asp:BoundField DataField="Descripcion" HeaderText="Descripción" ControlStyle-CssClass="borde-edicion" />
@@ -35,6 +36,8 @@
 
                             <ItemTemplate>
                                 <asp:Button ID="btnEditar" runat="server" Text="✏️ Editar" CssClass="btn btn-sm btn-outline-secondary me-2" CommandName="Edit" />
+
+                                <asp:Button ID="btnEliminar" runat="server" Text="🗑️ Eliminar" CssClass="btn btn-sm btn-outline-danger" CommandName="Delete" OnClientClick="return confirm('¿Seguro que deseas eliminar esta categoría?');" />
 
                             </ItemTemplate>
 

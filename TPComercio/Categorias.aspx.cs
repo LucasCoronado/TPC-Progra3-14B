@@ -1,4 +1,4 @@
-﻿using Negocio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,6 +87,23 @@ namespace TPComercio
             catch (Exception ex)
             {
                 lblError.Text = "Ocurrió un error al guardar: " + ex.Message;
+            }
+        }
+
+        protected void dgvCategorias_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(dgvCategorias.DataKeys[e.RowIndex].Value);
+
+                CategoriaNegocio negocio = new CategoriaNegocio();
+                negocio.Eliminar(id);
+
+                CargarGrilla();
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Error al eliminar: " + ex.Message;
             }
         }
 
