@@ -50,5 +50,18 @@ namespace Negocio
             datos.Modificar(marcaModificada);
         }
 
+        public void Eliminar(int id)
+        {
+            try
+            {
+                MarcaDatos datos = new MarcaDatos();
+                datos.Eliminar(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

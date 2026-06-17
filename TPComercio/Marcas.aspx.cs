@@ -91,5 +91,22 @@ namespace TPComercio
             }
         }
 
+        protected void dgvMarcas_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(dgvMarcas.DataKeys[e.RowIndex].Value);
+
+                MarcaNegocio negocio = new MarcaNegocio();
+                negocio.Eliminar(id);
+
+                CargarGrilla();
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Error al eliminar: " + ex.Message;
+            }
+        }
+
     }
 }

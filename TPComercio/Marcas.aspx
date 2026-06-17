@@ -25,7 +25,8 @@
             AutoGenerateColumns="false" DataKeyNames="Id"
             OnRowEditing="dgvMarcas_RowEditing"
             OnRowCancelingEdit="dgvMarcas_RowCancelingEdit"
-            OnRowUpdating="dgvMarcas_RowUpdating">
+            OnRowUpdating="dgvMarcas_RowUpdating"
+            OnRowDeleting="dgvMarcas_RowDeleting">
             <Columns>
                 <asp:BoundField DataField="Id" HeaderText="ID" ReadOnly="true" />
                 <asp:BoundField DataField="Descripcion" HeaderText="Descripción" ControlStyle-CssClass="borde-edicion" />
@@ -34,6 +35,8 @@
 
                     <ItemTemplate>
                         <asp:Button ID="btnEditar" runat="server" Text="✏️ Editar" CssClass="btn btn-sm btn-outline-secondary me-2" CommandName="Edit" />
+
+                        <asp:Button ID="btnEliminar" runat="server" Text="🗑️ Eliminar" CssClass="btn btn-sm btn-outline-danger" CommandName="Delete" OnClientClick="return confirm('¿Seguro que deseas eliminar esta marca?');" />
 
                     </ItemTemplate>
 

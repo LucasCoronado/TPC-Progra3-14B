@@ -18,7 +18,7 @@ namespace Datos
 
             try
             {
-                datos.setearConsulta("Select Id, Descripcion from Marcas");
+                datos.setearConsulta("Select Id, Descripcion, Activo from Marcas WHERE Activo = 1");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -26,6 +26,7 @@ namespace Datos
                     Marca aux = new Marca();
                     aux.Id = (int)datos.Lector["Id"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
 
                     lista.Add(aux);
                 }
@@ -48,7 +49,7 @@ namespace Datos
             try
             {
 
-                datos.setearConsulta("INSERT INTO MARCAS (Descripcion)VALUES(@Descripcion)");
+                datos.setearConsulta("INSERT INTO MARCAS  (Descripcion, Activo) VALUES (@Descripcion, 1)");
                 datos.setearParametro("@Descripcion", nueva.Descripcion);
                 datos.ejecutarAccion();
 
@@ -86,8 +87,25 @@ namespace Datos
             {
                 datos.cerrarConexion();
             }
+        }
 
-
+        public void Eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Marcas SET Activo = 0 WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
 
     }
