@@ -39,5 +39,18 @@ namespace TPComercio.Negocio
             ProveedorDatos datos = new ProveedorDatos();
             datos.Modificar(modificado);
         }
+
+        public void Eliminar(int id)
+        {
+            try
+            {
+                ProveedorDatos datos = new ProveedorDatos();
+                datos.Eliminar(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

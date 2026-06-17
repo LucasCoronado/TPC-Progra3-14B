@@ -37,11 +37,12 @@
                     <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
                 </div>
 
-                <asp:GridView ID="dgvProveedores" runat="server" CssClass="table-auto w-full border" 
+                <asp:GridView ID="dgvProveedores" runat="server" CssClass="table table-auto w-full border" 
                     AutoGenerateColumns="false" DataKeyNames="Id"
                     OnRowEditing="dgvProveedores_RowEditing"
                     OnRowCancelingEdit="dgvProveedores_RowCancelingEdit"
-                    OnRowUpdating="dgvProveedores_RowUpdating">
+                    OnRowUpdating="dgvProveedores_RowUpdating"
+                    OnRowDeleting="dgvProveedores_RowDeleting">
                     <Columns>
                         <asp:BoundField DataField="Id" HeaderText="ID" Visible="false" ReadOnly="true" />
                         
@@ -52,7 +53,10 @@
                         
                         <asp:TemplateField HeaderText="Acciones" ItemStyle-Width="20%">
                             <ItemTemplate>
+                                
                                 <asp:Button ID="btnEditar" runat="server" Text="✏️ Editar" CssClass="btn btn-sm btn-outline-secondary me-2" CommandName="Edit" />
+                                <asp:Button ID="btnEliminar" runat="server" Text="🗑️ Eliminar" CssClass="btn btn-sm btn-outline-danger" CommandName="Delete" OnClientClick="return confirm('¿Seguro que deseas eliminar este proveedor?');" />
+
                             </ItemTemplate>
                             <EditItemTemplate>
                                 <asp:Button ID="btnGuardar" runat="server" Text="💾 Guardar" CssClass="btn btn-sm btn-success me-2" CommandName="Update" />

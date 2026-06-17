@@ -93,5 +93,22 @@ namespace TPComercio
                 lblError.Text = "Ocurrió un error al guardar: " + ex.Message;
             }
         }
+
+        protected void dgvProveedores_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                int id = Convert.ToInt32(dgvProveedores.DataKeys[e.RowIndex].Value);
+
+                ProveedorNegocio negocio = new ProveedorNegocio();
+                negocio.Eliminar(id);
+
+                CargarGrilla();
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Error al eliminar: " + ex.Message;
+            }
+        }
     }
 }

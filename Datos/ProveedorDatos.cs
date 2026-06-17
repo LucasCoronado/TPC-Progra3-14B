@@ -14,7 +14,7 @@ namespace Datos
 
             try
             {
-                datos.setearConsulta("SELECT * FROM Proveedores");
+                datos.setearConsulta("SELECT Id, RazonSocial, Cuit, Telefono, Email, Activo FROM Proveedores WHERE Activo = 1;");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -25,6 +25,7 @@ namespace Datos
                     aux.Cuit = (string)datos.Lector["Cuit"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
 
                     lista.Add(aux);
                 }
@@ -46,7 +47,7 @@ namespace Datos
 
             try
             {
-                datos.setearConsulta("INSERT INTO PROVEEDORES (RazonSocial, Cuit, Telefono, Email) VALUES (@RazonSocial, @Cuit, @Telefono, @Email)");
+                datos.setearConsulta("INSERT INTO PROVEEDORES (RazonSocial, Cuit, Telefono, Email, Activo) VALUES (@RazonSocial, @Cuit, @Telefono, @Email, 1)");
                 datos.setearParametro("@RazonSocial", nuevo.RazonSocial);
                 datos.setearParametro("@Cuit", nuevo.Cuit);
                 datos.setearParametro("@Telefono", nuevo.Telefono);
@@ -81,6 +82,29 @@ namespace Datos
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public void Eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Proveedores SET Activo = 0 WHERE @Id = id");
+                datos.setearParametro("@Id", id);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
                 throw ex;
             }
             finally
