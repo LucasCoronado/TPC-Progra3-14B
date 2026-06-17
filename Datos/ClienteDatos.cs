@@ -18,7 +18,7 @@ namespace Datos
 
             try
             {
-                datos.setearConsulta("Select * from Clientes");
+                datos.setearConsulta("SELECT Id, Nombre, Apellido, DNI, Telefono, Email, Activo from Clientes WHERE Activo = 1");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -30,6 +30,7 @@ namespace Datos
                     aux.Dni = (string)datos.Lector["Dni"];
                     aux.Telefono = (string)datos.Lector["Telefono"];
                     aux.Email = (string)datos.Lector["Email"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
 
                     lista.Add(aux);
                 }
@@ -52,7 +53,7 @@ namespace Datos
             try
             {
 
-                datos.setearConsulta("INSERT INTO CLIENTES (Nombre, Apellido, Dni, Telefono, Email)VALUES(@Nombre, @Apellido, @Dni, @Telefono, @Email)");
+                datos.setearConsulta("INSERT INTO CLIENTES (Nombre, Apellido, Dni, Telefono, Email, Activo)VALUES(@Nombre, @Apellido, @Dni, @Telefono, @Email, 1)");
                 datos.setearParametro("@Nombre", nueva.Nombre);
                 datos.setearParametro("@Apellido", nueva.Apellido);
                 datos.setearParametro("@Dni", nueva.Dni);
@@ -84,6 +85,25 @@ namespace Datos
                 datos.setearParametro("@Telefono", cliente.Telefono);
                 datos.setearParametro("@Email", cliente.Email);
                 datos.setearParametro("@Id", cliente.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void Eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Clientes SET Activo = 0 WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
