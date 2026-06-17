@@ -76,6 +76,11 @@
                     Categorías
                 </a>
 
+                <a href="Usuarios.aspx"
+                   class="block p-3 rounded hover:bg-slate-800 mb-2">
+                    Usuarios
+                </a>
+
                 <a href="Perfil.aspx"
                    class="block p-3 rounded hover:bg-slate-800">
                     Mi Perfil

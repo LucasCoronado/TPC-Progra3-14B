@@ -11,5 +11,6 @@ namespace TPComercio.Dominio
         public string NombreUsuario { get; set; }
         public string Password { get; set; }
         public string Rol { get; set; }
+        public bool Activo { get; set; }
     }
 }
