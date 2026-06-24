@@ -73,6 +73,7 @@ namespace TPComercio
                 TextBox txtGridUsuario = (TextBox)fila.Cells[1].Controls[0];
                 TextBox txtGridPassword = (TextBox)fila.Cells[2].Controls[0];
                 TextBox txtGridRol = (TextBox)fila.Cells[3].Controls[0];
+
                 Usuario usuarioModificado = new Usuario();
                 usuarioModificado.Id = id;
                 usuarioModificado.NombreUsuario = txtGridUsuario.Text;
@@ -80,6 +81,7 @@ namespace TPComercio
                 usuarioModificado.Rol = txtGridRol.Text;
                 UsuarioNegocio negocio = new UsuarioNegocio();
                 negocio.Modificar(usuarioModificado);
+
                 dgvUsuarios.EditIndex = -1;
                 CargarGrilla();
                 lblError.Text = "";

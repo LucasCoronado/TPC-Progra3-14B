@@ -78,12 +78,81 @@ namespace Datos
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("UPDATE Productos SET Codigo = @Codigo, Nombre = @Nombre, StockActual = @StockActual WHERE Id = @Id");
+                datos.setearConsulta("UPDATE Productos SET Codigo = @Codigo, Nombre = @Nombre WHERE Id = @Id");
                 datos.setearParametro("@Codigo", producto.Codigo);
                 datos.setearParametro("@Nombre", producto.Nombre);
-                datos.setearParametro("@StockActual", producto.StockActual);
                 datos.setearParametro("@Id", producto.Id);
                 datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void ModificarAvanzado(Producto producto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Productos SET " +
+                    "Codigo = @Codigo, Nombre = @Nombre, PrecioCompraActual = @PrecioCompraActual, IdMarca = @IdMarca, IdCategoria = @IdCategoria " +
+                    "WHERE Id = @Id");
+                datos.setearParametro("@Id", producto.Id);
+                datos.setearParametro("@Codigo", producto.Codigo);
+                datos.setearParametro("@Nombre", producto.Nombre);
+                datos.setearParametro("@PrecioCompraActual", producto.PrecioCompraActual);
+                datos.setearParametro("@IdMarca", producto.Marca.Id);
+                datos.setearParametro("@IdCategoria", producto.Categoria.Id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public Producto BuscarPorId(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT Id, Codigo, Nombre, StockActual, StockMinimo, PrecioCompraActual, PorcentajeGanancia, IdMarca, IdCategoria, Activo " +
+                    "FROM Productos WHERE Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Producto aux = new Producto();
+
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Codigo = (string)datos.Lector["Codigo"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.StockActual = (int)datos.Lector["StockActual"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+
+                    aux.StockMinimo = datos.Lector["StockMinimo"] != DBNull.Value ? (int)datos.Lector["StockMinimo"] : 0;
+                    aux.PrecioCompraActual = datos.Lector["PrecioCompraActual"] != DBNull.Value ? (decimal)datos.Lector["PrecioCompraActual"] : 0;
+                    aux.PorcentajeGanancia = datos.Lector["PorcentajeGanancia"] != DBNull.Value ? (decimal)datos.Lector["PorcentajeGanancia"] : 0;
+
+                    aux.Marca = new Marca();
+                    aux.Marca.Id = datos.Lector["IdMarca"] != DBNull.Value ? (int)datos.Lector["IdMarca"] : 0;
+
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.Id = datos.Lector["IdCategoria"] != DBNull.Value ? (int)datos.Lector["IdCategoria"] : 0;
+
+                    return aux; 
+                }
+
+                return null;
             }
             catch (Exception ex)
             {
@@ -114,5 +183,34 @@ namespace Datos
                 datos.cerrarConexion();
             }
         }
+
+        public bool Existe(string codigo, int idExcluido = 0)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+
+                datos.setearConsulta("SELECT Id FROM Productos WHERE Codigo = @Codigo AND Id != @IdExcluido");
+                datos.setearParametro("@Codigo", codigo);
+                datos.setearParametro("@IdExcluido", idExcluido);
+                datos.ejecutarLectura();
+
+                return datos.Lector.Read();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+
+        }
+
     }
 }
