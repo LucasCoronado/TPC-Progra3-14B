@@ -13,6 +13,18 @@ namespace TPComercio.Negocio
             return datos.ListarTodos();
         }
 
+        public List<Producto> Buscar(string filtro)
+        {
+            List<Producto> listaCompleta = listar();
+
+            List<Producto> listaFiltrada = listaCompleta.FindAll(x =>
+                x.Nombre.ToUpper().Contains(filtro.ToUpper()) ||
+                x.Codigo.ToUpper().Contains(filtro.ToUpper())
+            );
+
+            return listaFiltrada;
+        }
+
         public void Agregar(Producto nuevo)
         {
             if (string.IsNullOrWhiteSpace(nuevo.Codigo))

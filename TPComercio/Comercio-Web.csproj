@@ -157,6 +157,10 @@
     <Content Include="MasterPage.Master" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Datos\Datos.csproj">
+      <Project>{8be521a2-6187-4da9-bbb4-9d4f1727c2bd}</Project>
+      <Name>Datos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dominio\Dominio.csproj">
       <Project>{3de2e2f3-1b3f-4379-8147-116f31f1e3ea}</Project>
       <Name>Dominio</Name>

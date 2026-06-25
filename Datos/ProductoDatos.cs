@@ -14,7 +14,7 @@ namespace Datos
 
             try
             {
-                datos.setearConsulta("SELECT Id, Codigo, Nombre, StockActual FROM Productos");
+                datos.setearConsulta("SELECT Id, Codigo, Nombre, StockActual, PrecioCompraActual, PorcentajeGanancia FROM Productos");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -25,6 +25,8 @@ namespace Datos
                     aux.Codigo = (string)datos.Lector["Codigo"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.StockActual = (int)datos.Lector["StockActual"];
+                    aux.PrecioCompraActual = (decimal)datos.Lector["PrecioCompraActual"];
+                    aux.PorcentajeGanancia = (decimal)datos.Lector["PorcentajeGanancia"];
 
                     lista.Add(aux);
                 }
