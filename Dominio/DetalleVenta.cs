@@ -8,5 +8,6 @@ namespace Dominio
 {
     public class DetalleVenta : DetalleOperacion
     {
+        public string NombreProducto { get; set; }
     }
 }

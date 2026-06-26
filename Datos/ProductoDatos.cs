@@ -14,7 +14,7 @@ namespace Datos
 
             try
             {
-                datos.setearConsulta("SELECT Id, Codigo, Nombre, StockActual, Activo FROM Productos WHERE Activo = 1");
+                datos.setearConsulta("SELECT Id, Codigo, Nombre, StockActual, PrecioCompraActual, PorcentajeGanancia, Activo FROM Productos WHERE Activo = 1");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -26,6 +26,8 @@ namespace Datos
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.StockActual = (int)datos.Lector["StockActual"];
                     aux.Activo = (bool)datos.Lector["Activo"];
+                    aux.PrecioCompraActual = (decimal)datos.Lector["PrecioCompraActual"];
+                    aux.PorcentajeGanancia = (decimal)datos.Lector["PorcentajeGanancia"];
 
                     lista.Add(aux);
                 }
