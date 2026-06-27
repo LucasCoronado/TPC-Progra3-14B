@@ -101,5 +101,36 @@ namespace Datos
                 datos.cerrarConexion();
             }
         }
+
+        public bool Login(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT Id, Rol FROM Usuarios WHERE NombreUsuario = @user AND Password = @pass AND Activo = 1");
+                datos.setearParametro("@user",usuario.NombreUsuario);
+                datos.setearParametro("@pass",usuario.Password);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    usuario.Id = (int)datos.Lector["Id"];
+                    usuario.Rol = (string)datos.Lector["Rol"];
+
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
