@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="NuevaVenta.aspx.cs" Inherits="TPComercio.NuevaVenta" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="NuevaCompra.aspx.cs" Inherits="TPComercio.NuevaCompra" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -8,14 +8,14 @@
     <div class="bg-white p-6 rounded-xl shadow max-w-6xl mx-auto">
 
         <h2 class="text-2xl font-bold mb-5 text-gray-800">
-            Nueva Venta
+            Nueva Compra (Ingreso de Mercadería)
         </h2>
 
         <div class="grid grid-cols-2 gap-4 mb-6">
             <div>
-                <label class="block text-sm font-bold mb-1 text-gray-700">Cliente</label>
+                <label class="block text-sm font-bold mb-1 text-gray-700">Proveedor</label>
                 <asp:DropDownList
-                    ID="ddlClientes"
+                    ID="ddlProveedores"
                     runat="server"
                     CssClass="border p-2 rounded w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </asp:DropDownList>
@@ -60,8 +60,9 @@
                         <asp:BoundField DataField="Id" HeaderText="Id" Visible="false" />
                         <asp:BoundField DataField="Codigo" HeaderText="Código" ItemStyle-CssClass="p-2" />
                         <asp:BoundField DataField="Nombre" HeaderText="Producto" ItemStyle-CssClass="p-2" />
-                        <asp:BoundField DataField="StockActual" HeaderText="Stock" ItemStyle-CssClass="p-2" />
-                        <asp:BoundField DataField="PrecioVenta" HeaderText="Precio" ItemStyle-CssClass="p-2" />
+                        <asp:BoundField DataField="StockActual" HeaderText="Stock Actual" ItemStyle-CssClass="p-2" />
+                        
+                        <asp:BoundField DataField="PrecioCompraActual" HeaderText="Costo Unitario" DataFormatString="{0:C}" ItemStyle-CssClass="p-2" />
 
                         <asp:TemplateField HeaderText="Cantidad" ItemStyle-CssClass="p-2">
                             <ItemTemplate>
@@ -94,7 +95,7 @@
 
         <div class="border rounded-lg shadow-sm flex flex-col h-96 overflow-hidden">
             <div class="bg-gray-800 text-white p-3 font-bold flex justify-between items-center">
-                <h3>🛒 Detalle de productos en el carrito</h3>
+                <h3>📦 Detalle de Ingreso</h3>
             </div>
 
             <div class="overflow-y-auto flex-grow bg-white">
@@ -108,8 +109,8 @@
                     <RowStyle CssClass="border-b hover:bg-gray-50" />
                     <Columns>
                         <asp:BoundField DataField="NombreProducto" HeaderText="Producto" ItemStyle-CssClass="p-3" />
-                        <asp:BoundField DataField="Cantidad" HeaderText="Cant." ItemStyle-CssClass="p-3 text-center" />
-                        <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio U." DataFormatString="{0:C}" ItemStyle-CssClass="p-3" />
+                        <asp:BoundField DataField="Cantidad" HeaderText="Cant. Ingresada" ItemStyle-CssClass="p-3 text-center" />
+                        <asp:BoundField DataField="PrecioUnitario" HeaderText="Costo U." DataFormatString="{0:C}" ItemStyle-CssClass="p-3" />
                         <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" ItemStyle-CssClass="p-3 font-bold" />
 
                         <asp:TemplateField HeaderText="Quitar" ItemStyle-CssClass="p-3 text-center">
@@ -129,7 +130,7 @@
 
             <div class="p-4 bg-gray-50 border-t mt-auto">
                 <div class="flex justify-between items-center">
-                    <span class="text-gray-500 italic">Revise los productos antes de confirmar.</span>
+                    <span class="text-gray-500 italic">Revise las cantidades antes de ingresar al stock.</span>
                     <asp:Label
                         ID="lblTotal"
                         runat="server"
@@ -140,17 +141,17 @@
 
                 <div class="flex justify-end gap-3 mt-4">
                     <asp:Button
-                        ID="btnCancelarVenta"
+                        ID="btnCancelarCompra"
                         runat="server"
-                        Text="Cancelar Venta"
-                        OnClick="btnCancelarVenta_Click"
+                        Text="Cancelar Compra"
+                        OnClick="btnCancelarCompra_Click"
                         CssClass="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded font-bold transition duration-200" />
                     
                     <asp:Button
-                        ID="btnConfirmarVenta"
+                        ID="btnConfirmarCompra"
                         runat="server"
-                        Text="Confirmar Venta"
-                        OnClick="btnConfirmarVenta_Click"
+                        Text="Confirmar Compra"
+                        OnClick="btnConfirmarCompra_Click"
                         CssClass="bg-green-600 hover:bg-green-700 text-white px-8 py-2 rounded font-bold text-lg shadow-md transition duration-200" />
                 </div>
             </div>

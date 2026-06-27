@@ -41,8 +41,6 @@ namespace TPComercio
                 ddlClientes.DataBind();
 
                 ProductoNegocio negocioProducto = new ProductoNegocio();
-                dgvProductos.DataSource = negocioProducto.listar();
-                dgvProductos.DataBind();
             }
         }
 
@@ -157,6 +155,13 @@ namespace TPComercio
             {
                 throw ex;
             }
+        }
+
+        protected void btnCancelarVenta_Click(object sender, EventArgs e)
+        {
+            Session["Carrito"] = null;
+            ddlClientes.SelectedIndex = 0;
+            ActualizarPantallaCarrito();
         }
 
         private void ActualizarPantallaCarrito()

@@ -51,6 +51,11 @@
                     Nueva Venta
                 </a>
 
+                <a href="NuevaCompra.aspx"
+                    class="block p-3 rounded hover:bg-slate-800 mb-2">
+                    Nueva Compra
+                </a>
+
                 <a href="Productos.aspx"
                    class="block p-3 rounded hover:bg-slate-800 mb-2">
                     Productos

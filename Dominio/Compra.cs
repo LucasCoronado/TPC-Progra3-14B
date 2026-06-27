@@ -9,5 +9,6 @@ namespace TPComercio.Dominio
     public class Compra : Operacion
     {
         public Proveedor ProveedorAsociado { get; set; }
+
     }
 }

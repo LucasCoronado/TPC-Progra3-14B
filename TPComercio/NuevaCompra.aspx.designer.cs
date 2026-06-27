@@ -11,17 +11,17 @@ namespace TPComercio
 {
 
 
-    public partial class NuevaVenta
+    public partial class NuevaCompra
     {
 
         /// <summary>
-        /// ddlClientes control.
+        /// ddlProveedores control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlClientes;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProveedores;
 
         /// <summary>
         /// txtFecha control.
@@ -78,21 +78,21 @@ namespace TPComercio
         protected global::System.Web.UI.WebControls.Label lblTotal;
 
         /// <summary>
-        /// btnCancelarVenta control.
+        /// btnCancelarCompra control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelarVenta;
+        protected global::System.Web.UI.WebControls.Button btnCancelarCompra;
 
         /// <summary>
-        /// btnConfirmarVenta control.
+        /// btnConfirmarCompra control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConfirmarVenta;
+        protected global::System.Web.UI.WebControls.Button btnConfirmarCompra;
     }
 }
