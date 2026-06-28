@@ -7,16 +7,19 @@ namespace TPComercio.Datos
 {
     public class CompraDatos
     {
-        public int GuardarCompra(int idProveedor, decimal total, List<DetalleCompra> carrito)
+        public int GuardarCompra(Compra nuevaCompra, List<DetalleCompra> carrito)
         {
             int idCompraGenerado = 0;
             AccesoDatos datosCompra = new AccesoDatos();
 
             try
             {
-                datosCompra.setearConsulta("INSERT INTO Compras (IdProveedor, Fecha, Total) OUTPUT inserted.Id VALUES (@IdProveedor, GETDATE(), @Total)");
-                datosCompra.setearParametro("@IdProveedor", idProveedor);
-                datosCompra.setearParametro("@Total", total);
+                datosCompra.setearConsulta("INSERT INTO Compras (IdProveedor, Fecha, Total, NumeroFactura, FechaFactura) OUTPUT inserted.Id VALUES (@IdProveedor, @FechaIngreso, @Total, @NumeroFactura, @FechaFactura)");
+                datosCompra.setearParametro("@IdProveedor", nuevaCompra.IdProveedor);
+                datosCompra.setearParametro("@FechaIngreso", nuevaCompra.Fecha);
+                datosCompra.setearParametro("@Total", nuevaCompra.Total);
+                datosCompra.setearParametro("@NumeroFactura", nuevaCompra.NumeroFactura);
+                datosCompra.setearParametro("@FechaFactura", nuevaCompra.FechaFactura);
 
                 idCompraGenerado = datosCompra.ejecutarAccionScalar();
             }

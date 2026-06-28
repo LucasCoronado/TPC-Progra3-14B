@@ -15,7 +15,7 @@ namespace TPComercio
         {
             if (!IsPostBack)
             {
-                txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                txtFechaIngreso.Text = DateTime.Now.ToString("dd/MM/yyyy");
                 CargarProveedores();
                 Session["CarritoCompra"] = new List<DetalleCompra>();
             }
@@ -42,14 +42,33 @@ namespace TPComercio
             if (e.CommandName == "Agregar")
             {
                 int idProducto = int.Parse(e.CommandArgument.ToString());
-    
                 GridViewRow row = (GridViewRow)((Button)e.CommandSource).NamingContainer;
+
                 TextBox txtCant = (TextBox)row.FindControl("txtCantidad");
                 int cantidad = int.Parse(txtCant.Text);
 
+                string nombre = row.Cells[2].Text;
+
+                string precioTexto = row.Cells[4].Text.Replace("$", "").Trim();
+                decimal precioUnitario = decimal.Parse(precioTexto);
+
+                Producto productoSeleccionado = new Producto();
+                productoSeleccionado.Id = idProducto;
+                productoSeleccionado.Nombre = nombre;
+
+                DetalleCompra nuevoDetalle = new DetalleCompra();
+                nuevoDetalle.Producto = productoSeleccionado;
+                nuevoDetalle.Cantidad = cantidad;
+                nuevoDetalle.PrecioUnitario = precioUnitario;
+                nuevoDetalle.Subtotal = cantidad * precioUnitario;
+                nuevoDetalle.NumeroFactura = txtNumeroFactura.Text;
+
                 List<DetalleCompra> carrito = (List<DetalleCompra>)Session["CarritoCompra"];
+                carrito.Add(nuevoDetalle);
+                Session["CarritoCompra"] = carrito;
 
                 ActualizarGrillaCarrito();
+                lblTotal.Text = "Total: $" + CalcularTotal(carrito).ToString("0.00");
             }
         }
 
@@ -57,15 +76,16 @@ namespace TPComercio
         {
             List<DetalleCompra> carrito = (List<DetalleCompra>)Session["CarritoCompra"];
 
-            // 2. Calculamos el total (asegúrate de tener una función que sume los subtotales)
-            decimal total = CalcularTotal(carrito);
-            int idProveedor = int.Parse(ddlProveedores.SelectedValue);
+            Compra nuevaCompra = new Compra();
+            nuevaCompra.ProveedorAsociado = new Proveedor { Id = int.Parse(ddlProveedores.SelectedValue) };
+            nuevaCompra.Total = CalcularTotal(carrito);
+            nuevaCompra.NumeroFactura = txtNumeroFactura.Text;
+            nuevaCompra.FechaFactura = DateTime.Parse(txtFechaFactura.Text);
+            nuevaCompra.Fecha = DateTime.Now;
 
-            // 3. Llamamos al negocio
             CompraNegocio negocio = new CompraNegocio();
-            int idCompraGenerado = negocio.RegistrarCompra(idProveedor, total, carrito);
+            int idCompraGenerado = negocio.RegistrarCompra(nuevaCompra, carrito);
 
-            // 4. Feedback al usuario
             if (idCompraGenerado > 0)
             {
                 Session["CarritoCompra"] = new List<DetalleCompra>();

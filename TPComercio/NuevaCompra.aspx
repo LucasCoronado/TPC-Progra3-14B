@@ -11,25 +11,29 @@
             Nueva Compra (Ingreso de Mercadería)
         </h2>
 
-        <div class="grid grid-cols-2 gap-4 mb-6">
-            <div>
-                <label class="block text-sm font-bold mb-1 text-gray-700">Proveedor</label>
-                <asp:DropDownList
-                    ID="ddlProveedores"
-                    runat="server"
-                    CssClass="border p-2 rounded w-full bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </asp:DropDownList>
-            </div>
-            <div>
-                <label class="block text-sm font-bold mb-1 text-gray-700">Fecha</label>
-                <asp:TextBox
-                    ID="txtFecha"
-                    runat="server"
-                    CssClass="border p-2 rounded w-full bg-gray-100 text-gray-600"
-                    ReadOnly="true">
-                </asp:TextBox>
-            </div>
-        </div>
+        <div class="grid grid-cols-4 gap-4 mb-6 bg-gray-50 p-4 rounded-lg border">
+    
+    <div class="col-span-2">
+        <label class="block text-sm font-bold mb-1 text-gray-700">Proveedor</label>
+        <asp:DropDownList ID="ddlProveedores" runat="server" CssClass="border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"></asp:DropDownList>
+    </div>
+
+    <div>
+        <label class="block text-sm font-bold mb-1 text-gray-700">Fecha Ingreso</label>
+        <asp:TextBox ID="txtFechaIngreso" runat="server" CssClass="border p-2 rounded w-full bg-gray-200 text-gray-600" ReadOnly="true"></asp:TextBox>
+    </div>
+
+    <div></div> <div class="col-span-2">
+        <label class="block text-sm font-bold mb-1 text-gray-700">Nro. Factura Proveedor</label>
+        <asp:TextBox ID="txtNumeroFactura" runat="server" CssClass="border p-2 rounded w-full" placeholder="Ej: A-0001-00001234"></asp:TextBox>
+    </div>
+
+    <div>
+        <label class="block text-sm font-bold mb-1 text-gray-700">Fecha Factura</label>
+        <asp:TextBox ID="txtFechaFactura" runat="server" TextMode="Date" CssClass="border p-2 rounded w-full"></asp:TextBox>
+    </div>
+
+</div>
 
         <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-6">
             <div class="flex gap-4 mb-4">
@@ -108,6 +112,7 @@
                     <HeaderStyle CssClass="bg-gray-100 border-b sticky top-0 shadow-sm" />
                     <RowStyle CssClass="border-b hover:bg-gray-50" />
                     <Columns>
+                        <asp:BoundField DataField="NumeroFactura" HeaderText="Factura" ItemStyle-CssClass="p-3 text-gray-500 font-mono" />
                         <asp:BoundField DataField="NombreProducto" HeaderText="Producto" ItemStyle-CssClass="p-3" />
                         <asp:BoundField DataField="Cantidad" HeaderText="Cant. Ingresada" ItemStyle-CssClass="p-3 text-center" />
                         <asp:BoundField DataField="PrecioUnitario" HeaderText="Costo U." DataFormatString="{0:C}" ItemStyle-CssClass="p-3" />

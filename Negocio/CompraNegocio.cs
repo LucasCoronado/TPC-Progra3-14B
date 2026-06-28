@@ -6,10 +6,10 @@ namespace Negocio
 {
     public class CompraNegocio
     {
-        public int RegistrarCompra(int idProveedor, decimal total, List<DetalleCompra> listaDetalles)
+        public int RegistrarCompra(Compra nuevaCompra, List<DetalleCompra> listaDetalles)
         {
             CompraDatos datosCompra = new CompraDatos();
-            return datosCompra.GuardarCompra(idProveedor, total, listaDetalles);
+            return datosCompra.GuardarCompra(nuevaCompra, listaDetalles);
         }
     }
 }

@@ -150,6 +150,7 @@ namespace TPComercio
                 dgvDetalle.DataSource = null;
                 dgvDetalle.DataBind();
                 lblTotal.Text = "Total: $0";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Venta registrada correctamente con ID: " + idNuevaVenta + "');", true);
             }
             catch (Exception ex)
             {

@@ -11,6 +11,11 @@ namespace TPComercio.Dominio
     public class DetalleCompra : DetalleOperacion
     {
         public Producto Producto { get; set; }
-        public string NombreProducto => Producto != null ? Producto.Nombre : "Sin nombre";
+
+        public string NombreProducto
+        {
+            get { return Producto != null ? Producto.Nombre : "Sin nombre"; }
+        }
+        public string NumeroFactura { get; set; }
     }
 }
