@@ -54,5 +54,11 @@ namespace Negocio
             UsuarioDatos datos = new UsuarioDatos();
             datos.Eliminar(id);
         }
+
+        public bool Login(Usuario usuario)
+        {
+            UsuarioDatos uDatos = new UsuarioDatos();
+            return uDatos.Login(usuario);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dominio;
+using System;
 using System.Web.UI.WebControls;
 using TPComercio.Dominio;
 using TPComercio.Negocio;
@@ -9,6 +10,12 @@ namespace TPComercio
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Seguridad.esAdmin(Session["usuario"]))
+            {
+                Response.Redirect("Default.aspx", false);
+                return;
+            }
+
             if (!IsPostBack)
             {
                 CargarGrilla();
