@@ -120,5 +120,83 @@ namespace TPComercio.Datos
             }
         }
 
+        public Compra ObtenerCompraPorId(int idCompra)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+                datos.setearConsulta("SELECT C.Id, C.Fecha, C.Total, P.RazonSocial as Proveedor FROM Compras C JOIN Proveedores P ON C.IdProveedor = P.Id WHERE C.Id = @IdCompra");
+                datos.setearParametro("@IdCompra", idCompra);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Compra aux = new Compra();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Fecha = (DateTime)datos.Lector["Fecha"];
+                    aux.Total = (decimal)datos.Lector["Total"];
+
+                    aux.ProveedorAsociado = new Proveedor();
+                    aux.ProveedorAsociado.RazonSocial = (string)datos.Lector["Proveedor"];
+
+                    return aux;
+                }
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<DetalleCompra> ListarDetalles(int idCompra)
+        {
+
+            List<DetalleCompra> lista = new List<DetalleCompra>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT DC.Id, P.Nombre as Producto, DC.Cantidad, DC.PrecioUnitario " +
+                                     "FROM DetalleCompras DC " +
+                                     "JOIN Productos P ON DC.IdProducto = P.Id " +
+                                     "WHERE DC.IdCompra = @IdCompra");
+                datos.setearParametro("@IdCompra", idCompra);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+
+                    DetalleCompra aux = new DetalleCompra();
+
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Cantidad = (int)datos.Lector["Cantidad"];
+                    aux.PrecioUnitario = (decimal)datos.Lector["PrecioUnitario"];
+                    aux.Producto = new Producto();
+                    aux.Producto.Nombre = (string)datos.Lector["Producto"];
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
     }
 }

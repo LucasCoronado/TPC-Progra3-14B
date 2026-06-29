@@ -162,10 +162,7 @@ namespace TPComercio.Datos
                     aux.Cantidad = (int)datos.Lector["Cantidad"];
                     aux.PrecioUnitario = (decimal)datos.Lector["PrecioUnitario"];
                     aux.NombreProducto = (string)datos.Lector["Producto"];
-
-                    aux.Subtotal = aux.Cantidad * aux.PrecioUnitario;
-
-
+                    
                     lista.Add(aux);
                 }
                 return lista;
