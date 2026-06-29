@@ -1,4 +1,4 @@
-﻿using Dominio;
+using Dominio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +31,7 @@ namespace TPComercio
                     linkCategorias.Visible = false;
                     linkProductos.Visible = false;
                     linkProveedores.Visible = false;
+                    linkHistorial.Visible = false;
                 }
             }
 
