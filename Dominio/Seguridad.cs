@@ -31,7 +31,7 @@ namespace Dominio
             {
                 esAdmin = true;
             }
-            return usuario != null ? esAdmin : false;
+             return usuario != null ? esAdmin : false;
         }
 
     }

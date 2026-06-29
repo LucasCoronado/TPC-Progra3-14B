@@ -10,11 +10,17 @@ namespace Negocio
 {
     public class VentaNegocio
     {
-        public int GenerarVenta(int idCliente, decimal total, List<DetalleVenta> carrito)
+        public int GenerarVenta(int idCliente, int idUsuario, string numeroFactura, decimal total, List<DetalleVenta> carrito)
         {
             VentaDatos datosVenta = new VentaDatos();
 
-            return datosVenta.GuardarVenta(idCliente, total, carrito);
+            return datosVenta.GuardarVenta(idCliente, idUsuario, numeroFactura, total, carrito);
+        }
+
+        public string GenerarProximoNumero()
+        {
+            VentaDatos datos = new VentaDatos();
+            return datos.ObtenerProximoNumeroFactura();
         }
     }
 }

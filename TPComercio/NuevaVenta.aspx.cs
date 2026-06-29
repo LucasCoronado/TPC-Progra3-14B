@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TPComercio.Datos;
+using TPComercio.Dominio;
 using TPComercio.Negocio;
 
 namespace TPComercio
@@ -138,13 +139,25 @@ namespace TPComercio
                 return;
             }
 
+            if (Session["usuario"] == null)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Sesión expirada. Por favor, vuelva a loguearse.');", true);
+                return;
+            }
+
+            Usuario usuarioLogueado = (Usuario)Session["usuario"];
+            int idUsuario = usuarioLogueado.Id;
+
             try
             {
                 int idCliente = int.Parse(ddlClientes.SelectedValue);
                 decimal totalFinal = CarritoSession.Sum(item => item.Cantidad * item.PrecioUnitario);
 
                 VentaNegocio negocioVenta = new VentaNegocio();
-                int idNuevaVenta = negocioVenta.GenerarVenta(idCliente, totalFinal, CarritoSession);
+
+                string nuevoNumero = negocioVenta.GenerarProximoNumero();
+
+                int idNuevaVenta = negocioVenta.GenerarVenta(idCliente, idUsuario, nuevoNumero, totalFinal, CarritoSession);
 
                 Session["Carrito"] = null;
                 dgvDetalle.DataSource = null;
@@ -154,7 +167,7 @@ namespace TPComercio
             }
             catch (Exception ex)
             {
-                throw ex;
+                ClientScript.RegisterStartupScript(this.GetType(), "error", "alert('Error al procesar la venta: " + ex.Message + "');", true);
             }
         }
 

@@ -6,15 +6,17 @@ namespace TPComercio.Datos
 {
     public class VentaDatos
     {
-        public int GuardarVenta(int idCliente, decimal total, List<DetalleVenta> carrito)
+        public int GuardarVenta(int idCliente, int idUsuario, string numeroFactura, decimal total, List<DetalleVenta> carrito)
         {
             int idVentaGenerado = 0;
 
                 AccesoDatos datosVenta = new AccesoDatos();
             try
             {
-                datosVenta.setearConsulta("INSERT INTO Ventas (IdCliente, Fecha, Total) OUTPUT inserted.Id VALUES (@IdCliente, GETDATE(), @Total)");
+                datosVenta.setearConsulta("INSERT INTO Ventas (IdCliente, IdUsuario, Fecha, NumeroFactura, Total) OUTPUT inserted.Id VALUES (@IdCliente, @IdUsuario, GETDATE(), @NumeroFactura, @Total)");
                 datosVenta.setearParametro("@IdCliente", idCliente);
+                datosVenta.setearParametro("@IdUsuario", idUsuario);
+                datosVenta.setearParametro("@NumeroFactura", numeroFactura);
                 datosVenta.setearParametro("@Total", total);
 
                 idVentaGenerado = datosVenta.ejecutarAccionScalar();
@@ -61,5 +63,35 @@ namespace TPComercio.Datos
 
             return idVentaGenerado;
         }
+
+
+        public string ObtenerProximoNumeroFactura()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT TOP 1 NumeroFactura FROM Ventas ORDER BY NumeroFactura DESC");
+
+                object resultado = datos.ejecutarScalar();
+
+                if (resultado == null || resultado == DBNull.Value)
+                {
+                    return "A-0001-00000001";
+                }
+
+                string ultimo = (string)resultado;
+                string[] partes = ultimo.Split('-');
+                int correlativo = int.Parse(partes[2]);
+
+                return "A-0001-" + (correlativo + 1).ToString("D8");
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
+        }
+
+
+
     }
+
+
 }

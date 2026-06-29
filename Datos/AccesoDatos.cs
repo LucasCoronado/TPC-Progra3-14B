@@ -45,10 +45,13 @@ namespace TPComercio.Datos
 
         public void ejecutarAccion()
         {
-            comando.Connection = conexion;
             try
             {
-                conexion.Open();
+                comando.Connection = conexion;
+                if (conexion.State == System.Data.ConnectionState.Closed)
+                {
+                    conexion.Open();
+                }
                 comando.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -69,6 +72,20 @@ namespace TPComercio.Datos
             {
                 throw ex;
             }
+        }
+
+        public object ejecutarScalar()
+        {
+            try
+            {
+                comando.Connection = conexion;
+                if (conexion.State == System.Data.ConnectionState.Closed)
+                {
+                    conexion.Open();
+                }
+                return comando.ExecuteScalar();
+            }
+            catch (Exception ex) { throw ex; }
         }
 
         public void setearParametro(string nombre, object valor)

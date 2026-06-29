@@ -71,27 +71,41 @@ namespace TPComercio
                 lblTotal.Text = "Total: $" + CalcularTotal(carrito).ToString("0.00");
             }
         }
-
         protected void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
             List<DetalleCompra> carrito = (List<DetalleCompra>)Session["CarritoCompra"];
 
-            Compra nuevaCompra = new Compra();
-            nuevaCompra.ProveedorAsociado = new Proveedor { Id = int.Parse(ddlProveedores.SelectedValue) };
-            nuevaCompra.Total = CalcularTotal(carrito);
-            nuevaCompra.NumeroFactura = txtNumeroFactura.Text;
-            nuevaCompra.FechaFactura = DateTime.Parse(txtFechaFactura.Text);
-            nuevaCompra.Fecha = DateTime.Now;
-
-            CompraNegocio negocio = new CompraNegocio();
-            int idCompraGenerado = negocio.RegistrarCompra(nuevaCompra, carrito);
-
-            if (idCompraGenerado > 0)
+            if (carrito == null || carrito.Count == 0)
             {
-                Session["CarritoCompra"] = new List<DetalleCompra>();
-                ActualizarGrillaCarrito();
-                lblTotal.Text = "Total: $0.00";
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Compra registrada correctamente con ID: " + idCompraGenerado + "');", true);
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('El carrito está vacío. Agregue productos antes de confirmar.');", true);
+                return;
+            }
+
+            try
+            {
+                Compra nuevaCompra = new Compra();
+                nuevaCompra.ProveedorAsociado = new Proveedor { Id = int.Parse(ddlProveedores.SelectedValue) };
+                nuevaCompra.Total = CalcularTotal(carrito);
+                nuevaCompra.NumeroFactura = txtNumeroFactura.Text;
+                nuevaCompra.FechaFactura = !string.IsNullOrEmpty(txtFechaFactura.Text) ? DateTime.Parse(txtFechaFactura.Text) : DateTime.Now;
+                nuevaCompra.Fecha = DateTime.Now;
+
+                CompraNegocio negocio = new CompraNegocio();
+                int idCompraGenerado = negocio.RegistrarCompra(nuevaCompra, carrito);
+
+
+                if (idCompraGenerado > 0)
+                {
+                    Session["CarritoCompra"] = new List<DetalleCompra>();
+                    ActualizarGrillaCarrito();
+                    lblTotal.Text = "Total: $0.00";
+                    txtNumeroFactura.Text = ""; // Limpiamos campos
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Compra registrada correctamente con ID: " + idCompraGenerado + "');", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "error", "alert('Error al registrar compra: " + ex.Message + "');", true);
             }
         }
 
