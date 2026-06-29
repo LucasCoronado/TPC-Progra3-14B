@@ -62,5 +62,63 @@ namespace TPComercio.Datos
 
             return idCompraGenerado;
         }
+
+        public List<Compra> ListarHistorial(string proveedor = "", DateTime? desde = null, DateTime? hasta = null)
+        {
+            List<Compra> lista = new List<Compra>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string consulta = "SELECT C.Id, C.Fecha, C.Total, P.Nombre as Proveedor FROM Compras C LEFT JOIN Proveedores P ON C.IdProveedor = P.Id WHERE 1=1 ";
+
+                if (!string.IsNullOrEmpty(proveedor))
+                {
+                    consulta += " AND P.Nombre LIKE @Proveedor ";
+                    datos.setearParametro("@Proveedor", "%" + proveedor + "%");
+                }
+
+                if (desde.HasValue)
+                {
+                    consulta += " AND C.Fecha >= @Desde ";
+                    datos.setearParametro("@Desde", desde.Value);
+                }
+
+                if (hasta.HasValue)
+                {
+                    consulta += " AND C.Fecha < @Hasta ";
+                    datos.setearParametro("@Hasta", hasta.Value.AddDays(1));
+                }
+
+                consulta += " ORDER BY C.Id DESC";
+
+                datos.setearConsulta(consulta);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Compra aux = new Compra();
+
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Fecha = (DateTime)datos.Lector["Fecha"];
+                    aux.Total = (decimal)datos.Lector["Total"];
+                    aux.ProveedorAsociado = new Proveedor();
+                    aux.ProveedorAsociado.RazonSocial = (string)datos.Lector["Proveedor"];
+
+                    lista.Add(aux);
+                }
+                return lista;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
