@@ -9,7 +9,6 @@ namespace Dominio
     public class Factura
     {
         public int Id { get; set; }
-        public string NumeroComprobante { get; set; }
-        public DateTime FechaEmision { get; set; }
+        public string NumeroFactura { get; set; }
     }
 }

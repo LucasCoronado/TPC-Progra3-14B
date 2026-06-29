@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -71,6 +71,9 @@
     <Content Include="Clientes.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="VentaDetalle.aspx" />
+    <Content Include="Historial.aspx" />
+    <Content Include="HistorialVentas.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Marcas.aspx" />
     <Content Include="NuevaCompra.aspx" />
@@ -104,12 +107,33 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="VentaDetalle.aspx.cs">
+      <DependentUpon>VentaDetalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VentaDetalle.aspx.designer.cs">
+      <DependentUpon>VentaDetalle.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Historial.aspx.cs">
+      <DependentUpon>Historial.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Historial.aspx.designer.cs">
+      <DependentUpon>Historial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialVentas.aspx.cs">
+      <DependentUpon>HistorialVentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HistorialVentas.aspx.designer.cs">
+      <DependentUpon>HistorialVentas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -141,6 +165,7 @@
     </Compile>
     <Compile Include="NuevoProducto.aspx.cs">
       <DependentUpon>NuevoProducto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="NuevoProducto.aspx.designer.cs">
       <DependentUpon>NuevoProducto.aspx</DependentUpon>
