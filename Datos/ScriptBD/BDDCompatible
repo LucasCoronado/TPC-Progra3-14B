@@ -1,14 +1,6 @@
 USE [master]
 GO
 
--- Si la base de datos ya existe, la borramos para recrearla limpiamente
-IF EXISTS (SELECT name FROM sys.databases WHERE name = N'BDDComercio')
-BEGIN
-    ALTER DATABASE [BDDComercio] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE [BDDComercio];
-END
-GO
-
 CREATE DATABASE [BDDComercio]
 GO
 
