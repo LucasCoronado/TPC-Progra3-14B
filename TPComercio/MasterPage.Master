@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.Master.cs" Inherits="TPComercio.Site1" %>
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.Master.cs" Inherits="TPComercio.Site1" %>
 
 <!DOCTYPE html>
 
@@ -55,6 +55,11 @@
                 <a href="NuevaCompra.aspx" id="linkCompras" runat="server"
                     class="block p-3 rounded hover:bg-slate-800 mb-2">
                     Nueva Compra
+                </a>
+
+                <a href="Historial.aspx" id="linkHistorial" runat="server"
+                    class="block p-3 rounded hover:bg-slate-800 mb-2">
+                    Historial de Operaciones
                 </a>
 
                 <a href="Productos.aspx" id="linkProductos" runat="server"

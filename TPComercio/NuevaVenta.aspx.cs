@@ -95,7 +95,7 @@ namespace TPComercio
                 if (itemExistente != null)
                 {
                     itemExistente.Cantidad += cantidad;
-                    itemExistente.Subtotal = itemExistente.Cantidad * itemExistente.PrecioUnitario;
+                    //itemExistente.Subtotal = itemExistente.Cantidad * itemExistente.PrecioUnitario;
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace TPComercio
                     nuevoDetalle.NombreProducto = nombreProducto;
                     nuevoDetalle.Cantidad = cantidad;
                     nuevoDetalle.PrecioUnitario = precioVenta;
-                    nuevoDetalle.Subtotal = cantidad * precioVenta;
+                    //nuevoDetalle.Subtotal = cantidad * precioVenta;
 
                     carritoTemporal.Add(nuevoDetalle);
                 }
