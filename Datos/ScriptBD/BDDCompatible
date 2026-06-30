@@ -1,0 +1,142 @@
+USE [master]
+GO
+
+-- Si la base de datos ya existe, la borramos para recrearla limpiamente
+IF EXISTS (SELECT name FROM sys.databases WHERE name = N'BDDComercio')
+BEGIN
+    ALTER DATABASE [BDDComercio] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE [BDDComercio];
+END
+GO
+
+CREATE DATABASE [BDDComercio]
+GO
+
+USE [BDDComercio]
+GO
+
+CREATE TABLE [dbo].[Categorias](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Descripcion] [varchar](100) NOT NULL,
+	[Activo] [bit] NOT NULL DEFAULT ((1)),
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+CREATE TABLE [dbo].[Clientes](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [varchar](100) NOT NULL,
+	[Apellido] [varchar](100) NOT NULL,
+	[Dni] [varchar](20) NOT NULL,
+	[Telefono] [varchar](50) NULL,
+	[Email] [varchar](100) NULL,
+	[Activo] [bit] NOT NULL DEFAULT ((1)),
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+CREATE TABLE [dbo].[Compras](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Fecha] [datetime] NOT NULL,
+	[IdProveedor] [int] NULL,
+	[Total] [decimal](18, 2) NOT NULL,
+	[NumeroFactura] [varchar](50) NULL,
+	[FechaFactura] [datetime] NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+CREATE TABLE [dbo].[Marcas](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Descripcion] [varchar](100) NOT NULL,
+	[Activo] [bit] NOT NULL DEFAULT ((1)),
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+CREATE TABLE [dbo].[Productos](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Codigo] [varchar](50) NOT NULL,
+	[Nombre] [varchar](100) NOT NULL,
+	[StockActual] [int] NOT NULL,
+	[StockMinimo] [int] NOT NULL,
+	[PrecioCompraActual] [decimal](18, 2) NOT NULL,
+	[PorcentajeGanancia] [decimal](5, 2) NOT NULL,
+	[IdMarca] [int] NULL,
+	[IdCategoria] [int] NULL,
+	[Activo] [bit] NOT NULL DEFAULT ((1)),
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+CREATE TABLE [dbo].[Proveedores](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[RazonSocial] [varchar](100) NOT NULL,
+	[Cuit] [varchar](50) NOT NULL,
+	[Telefono] [varchar](50) NULL,
+	[Email] [varchar](100) NULL,
+	[Activo] [bit] NOT NULL DEFAULT ((1)),
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+CREATE TABLE [dbo].[Usuarios](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[NombreUsuario] [varchar](50) NOT NULL,
+	[Password] [varchar](100) NOT NULL,
+	[Rol] [varchar](50) NOT NULL,
+	[Activo] [bit] NOT NULL DEFAULT ((1)),
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+CREATE TABLE [dbo].[Ventas](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Fecha] [datetime] NOT NULL,
+	[IdCliente] [int] NULL,
+	[IdUsuario] [int] NULL,
+	[NumeroFactura] [varchar](50) NULL,
+	[Total] [decimal](18, 2) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+CREATE TABLE [dbo].[DetalleCompras](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdCompra] [int] NOT NULL,
+	[IdProducto] [int] NOT NULL,
+	[Cantidad] [int] NOT NULL,
+	[PrecioUnitario] [decimal](18, 2) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+CREATE TABLE [dbo].[DetalleVentas](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdVenta] [int] NOT NULL,
+	[IdProducto] [int] NOT NULL,
+	[Cantidad] [int] NOT NULL,
+	[PrecioUnitario] [decimal](18, 2) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+)
+GO
+
+-- Creación de Relaciones (Foreign Keys)
+ALTER TABLE [dbo].[Compras] WITH CHECK ADD FOREIGN KEY([IdProveedor]) REFERENCES [dbo].[Proveedores] ([Id])
+GO
+ALTER TABLE [dbo].[DetalleCompras] WITH CHECK ADD FOREIGN KEY([IdCompra]) REFERENCES [dbo].[Compras] ([Id])
+GO
+ALTER TABLE [dbo].[DetalleCompras] WITH CHECK ADD FOREIGN KEY([IdProducto]) REFERENCES [dbo].[Productos] ([Id])
+GO
+ALTER TABLE [dbo].[DetalleVentas] WITH CHECK ADD FOREIGN KEY([IdProducto]) REFERENCES [dbo].[Productos] ([Id])
+GO
+ALTER TABLE [dbo].[DetalleVentas] WITH CHECK ADD FOREIGN KEY([IdVenta]) REFERENCES [dbo].[Ventas] ([Id])
+GO
+ALTER TABLE [dbo].[Productos] WITH CHECK ADD FOREIGN KEY([IdCategoria]) REFERENCES [dbo].[Categorias] ([Id])
+GO
+ALTER TABLE [dbo].[Productos] WITH CHECK ADD FOREIGN KEY([IdMarca]) REFERENCES [dbo].[Marcas] ([Id])
+GO
+ALTER TABLE [dbo].[Ventas] WITH CHECK ADD FOREIGN KEY([IdCliente]) REFERENCES [dbo].[Clientes] ([Id])
+GO
+ALTER TABLE [dbo].[Ventas] WITH CHECK ADD FOREIGN KEY([IdUsuario]) REFERENCES [dbo].[Usuarios] ([Id])
+GO
