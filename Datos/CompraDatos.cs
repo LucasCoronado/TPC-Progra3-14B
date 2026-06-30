@@ -70,7 +70,7 @@ namespace TPComercio.Datos
 
             try
             {
-                string consulta = "SELECT C.Id, C.Fecha, C.Total, P.Nombre as Proveedor FROM Compras C LEFT JOIN Proveedores P ON C.IdProveedor = P.Id WHERE 1=1 ";
+                string consulta = "SELECT C.Id, C.Fecha, C.Total, P.RazonSocial as Proveedor FROM Compras C LEFT JOIN Proveedores P ON C.IdProveedor = P.Id WHERE 1=1 ";
 
                 if (!string.IsNullOrEmpty(proveedor))
                 {

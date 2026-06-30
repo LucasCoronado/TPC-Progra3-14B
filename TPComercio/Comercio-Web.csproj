@@ -69,8 +69,10 @@
   <ItemGroup>
     <Content Include="Categorias.aspx" />
     <Content Include="Clientes.aspx" />
+    <Content Include="CompraDetalle.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="HistorialCompras.aspx" />
     <Content Include="VentaDetalle.aspx" />
     <Content Include="Historial.aspx" />
     <Content Include="HistorialVentas.aspx" />
@@ -100,12 +102,26 @@
     <Compile Include="Clientes.aspx.designer.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CompraDetalle.aspx.cs">
+      <DependentUpon>CompraDetalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompraDetalle.aspx.designer.cs">
+      <DependentUpon>CompraDetalle.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HistorialCompras.aspx.cs">
+      <DependentUpon>HistorialCompras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HistorialCompras.aspx.designer.cs">
+      <DependentUpon>HistorialCompras.aspx</DependentUpon>
     </Compile>
     <Compile Include="VentaDetalle.aspx.cs">
       <DependentUpon>VentaDetalle.aspx</DependentUpon>

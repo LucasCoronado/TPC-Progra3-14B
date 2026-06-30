@@ -40,7 +40,7 @@ namespace TPComercio
                             lblTotal.Text = ventaObj.Total.ToString("C");
                         }
 
-                        List<global::Dominio.DetalleVenta> lista = negocio.ListarDetalles(idVenta);
+                        List<DetalleVenta> lista = negocio.ListarDetalles(idVenta);
                         dgvDetalles.DataSource = lista;
                         dgvDetalles.DataBind();
                     }
