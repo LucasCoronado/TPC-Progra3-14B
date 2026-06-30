@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="CompraDetalle.aspx.cs" Inherits="TPComercio.CompraDetalle" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="CompraDetalle.aspx.cs" Inherits="TPComercio.CompraDetalle" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -25,6 +25,10 @@
             <div>
                 <span class="block text-sm font-semibold text-slate-500 uppercase">Factura</span>
                 <asp:Label ID="lblFactura" runat="server" CssClass="text-lg font-medium text-slate-900"></asp:Label>
+            </div>
+            <div>
+                <span class="block text-sm font-semibold text-slate-500 uppercase">F. Factura</span>
+                <asp:Label ID="lblFechaFactura" runat="server" CssClass="text-lg font-medium text-slate-900"></asp:Label>
             </div>
             <div>
                 <span class="block text-sm font-semibold text-slate-500 uppercase">Proveedor</span>

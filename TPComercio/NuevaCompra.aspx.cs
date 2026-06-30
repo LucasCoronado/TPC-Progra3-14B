@@ -1,4 +1,4 @@
-﻿using Dominio;
+using Dominio;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,6 @@ namespace TPComercio
                 nuevoDetalle.Producto = productoSeleccionado;
                 nuevoDetalle.Cantidad = cantidad;
                 nuevoDetalle.PrecioUnitario = precioUnitario;
-                nuevoDetalle.Subtotal = cantidad * precioUnitario;
                 nuevoDetalle.NumeroFactura = txtNumeroFactura.Text;
 
                 List<DetalleCompra> carrito = (List<DetalleCompra>)Session["CarritoCompra"];
@@ -86,8 +85,9 @@ namespace TPComercio
                 Compra nuevaCompra = new Compra();
                 nuevaCompra.ProveedorAsociado = new Proveedor { Id = int.Parse(ddlProveedores.SelectedValue) };
                 nuevaCompra.Total = CalcularTotal(carrito);
-                nuevaCompra.NumeroFactura = txtNumeroFactura.Text;
-                nuevaCompra.FechaFactura = !string.IsNullOrEmpty(txtFechaFactura.Text) ? DateTime.Parse(txtFechaFactura.Text) : DateTime.Now;
+                nuevaCompra.FacturaAsociada = new Factura();
+                nuevaCompra.FacturaAsociada.NumeroFactura = txtNumeroFactura.Text;
+                nuevaCompra.FacturaAsociada.FechaEmision = !string.IsNullOrEmpty(txtFechaFactura.Text) ? DateTime.Parse(txtFechaFactura.Text) : DateTime.Now;
                 nuevaCompra.Fecha = DateTime.Now;
 
                 CompraNegocio negocio = new CompraNegocio();

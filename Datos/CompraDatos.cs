@@ -1,4 +1,4 @@
-﻿using Dominio;
+using Dominio;
 using System;
 using System.Collections.Generic;
 using TPComercio.Dominio;
@@ -18,8 +18,8 @@ namespace TPComercio.Datos
                 datosCompra.setearParametro("@IdProveedor", nuevaCompra.IdProveedor);
                 datosCompra.setearParametro("@FechaIngreso", nuevaCompra.Fecha);
                 datosCompra.setearParametro("@Total", nuevaCompra.Total);
-                datosCompra.setearParametro("@NumeroFactura", nuevaCompra.NumeroFactura);
-                datosCompra.setearParametro("@FechaFactura", nuevaCompra.FechaFactura);
+                datosCompra.setearParametro("@NumeroFactura", nuevaCompra.FacturaAsociada.NumeroFactura);
+                datosCompra.setearParametro("@FechaFactura", nuevaCompra.FacturaAsociada.FechaEmision);
 
                 idCompraGenerado = datosCompra.ejecutarAccionScalar();
             }
@@ -73,11 +73,11 @@ namespace TPComercio.Datos
 
             try
             {
-                string consulta = "SELECT C.Id, C.Fecha, C.Total, P.RazonSocial as Proveedor FROM Compras C LEFT JOIN Proveedores P ON C.IdProveedor = P.Id WHERE 1=1 ";
+                string consulta = "SELECT C.Id, C.Fecha, C.Total, C.NumeroFactura, C.FechaFactura, P.RazonSocial as Proveedor FROM Compras C LEFT JOIN Proveedores P ON C.IdProveedor = P.Id WHERE 1=1 ";
 
                 if (!string.IsNullOrEmpty(proveedor))
                 {
-                    consulta += " AND P.Nombre LIKE @Proveedor ";
+                    consulta += " AND P.RazonSocial LIKE @Proveedor ";
                     datos.setearParametro("@Proveedor", "%" + proveedor + "%");
                 }
 
@@ -107,6 +107,17 @@ namespace TPComercio.Datos
                     aux.Total = (decimal)datos.Lector["Total"];
                     aux.ProveedorAsociado = new Proveedor();
                     aux.ProveedorAsociado.RazonSocial = (string)datos.Lector["Proveedor"];
+                    aux.RegistradoPor = new Usuario();
+
+                    if (!(datos.Lector["NumeroFactura"] is DBNull))
+                    {
+                        aux.FacturaAsociada = new Factura();
+                        aux.FacturaAsociada.NumeroFactura = (string)datos.Lector["NumeroFactura"];
+                        if (!(datos.Lector["FechaFactura"] is DBNull))
+                        {
+                            aux.FacturaAsociada.FechaEmision = (DateTime)datos.Lector["FechaFactura"];
+                        }
+                    }
 
                     lista.Add(aux);
                 }
@@ -129,7 +140,7 @@ namespace TPComercio.Datos
             try
             {
 
-                datos.setearConsulta("SELECT C.Id, C.Fecha, C.Total, P.RazonSocial as Proveedor FROM Compras C JOIN Proveedores P ON C.IdProveedor = P.Id WHERE C.Id = @IdCompra");
+                datos.setearConsulta("SELECT C.Id, C.Fecha, C.Total, C.NumeroFactura, C.FechaFactura, P.RazonSocial as Proveedor FROM Compras C JOIN Proveedores P ON C.IdProveedor = P.Id WHERE C.Id = @IdCompra");
                 datos.setearParametro("@IdCompra", idCompra);
                 datos.ejecutarLectura();
 
@@ -142,6 +153,16 @@ namespace TPComercio.Datos
 
                     aux.ProveedorAsociado = new Proveedor();
                     aux.ProveedorAsociado.RazonSocial = (string)datos.Lector["Proveedor"];
+
+                    if (!(datos.Lector["NumeroFactura"] is DBNull))
+                    {
+                        aux.FacturaAsociada = new Factura();
+                        aux.FacturaAsociada.NumeroFactura = (string)datos.Lector["NumeroFactura"];
+                        if (!(datos.Lector["FechaFactura"] is DBNull))
+                        {
+                            aux.FacturaAsociada.FechaEmision = (DateTime)datos.Lector["FechaFactura"];
+                        }
+                    }
 
                     return aux;
                 }

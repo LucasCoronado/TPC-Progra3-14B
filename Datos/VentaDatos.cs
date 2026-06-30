@@ -91,11 +91,6 @@ namespace TPComercio.Datos
         }
 
 
-
-    }
-
-
-
         public List<Venta> ListarHistorial(string cliente = "", DateTime? desde = null, DateTime? hasta = null)
         {
             List<Venta> lista = new List<Venta>();
@@ -195,7 +190,7 @@ namespace TPComercio.Datos
                     aux.Cantidad = (int)datos.Lector["Cantidad"];
                     aux.PrecioUnitario = (decimal)datos.Lector["PrecioUnitario"];
                     aux.NombreProducto = (string)datos.Lector["Producto"];
-                    
+
                     lista.Add(aux);
                 }
                 return lista;

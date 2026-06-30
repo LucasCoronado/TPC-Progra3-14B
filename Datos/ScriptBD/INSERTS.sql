@@ -130,17 +130,17 @@ INSERT INTO Usuarios (NombreUsuario, Password, Rol, Activo) VALUES
 -- ============================================================================
 -- 7. TABLA: Compras (10 Transacciones estructurales)
 -- ============================================================================
-INSERT INTO Compras (Fecha, IdProveedor, Total) VALUES
-('2026-06-20 09:30:00', 1, 1260000.00), -- Compra de Procesadores
-('2026-06-20 11:00:00', 3, 2340000.00), -- Compra de Placas ASUS
-('2026-06-21 14:15:00', 4, 382000.00),  -- Compra de Periféricos Logitech
-('2026-06-21 16:00:00', 8, 920000.00),  -- Compra de SSDs
-('2026-06-22 10:00:00', 7, 2240000.00), -- Compra de Monitores/Celulares
-('2026-06-22 12:30:00', 9, 740000.00),  -- Compra de Accesorios Razer
-('2026-06-23 09:00:00', 10, 2405000.00),-- Compra de PS5 y Mandos
-('2026-06-23 15:45:00', 2, 680000.00),  -- Compra de Notebooks Base
-('2026-06-24 11:20:00', 5, 595000.00),  -- Compra de Memorias/Fuentes
-('2026-06-25 10:30:00', 6, 425000.00);  -- Compra de Webcams
+INSERT INTO Compras (Fecha, IdProveedor, Total, NumeroFactura, FechaFactura) VALUES
+('2026-06-20 09:30:00', 1, 1260000.00, 'A-0001-00001234', '2026-06-19'), -- Compra de Procesadores
+('2026-06-20 11:00:00', 3, 2340000.00, 'A-0002-00004567', '2026-06-18'), -- Compra de Placas ASUS
+('2026-06-21 14:15:00', 4, 382000.00,  'B-0001-00000089', '2026-06-20'), -- Compra de Periféricos Logitech
+('2026-06-21 16:00:00', 8, 920000.00,  'A-0003-00007890', '2026-06-21'), -- Compra de SSDs
+('2026-06-22 10:00:00', 7, 2240000.00, 'A-0005-00001111', '2026-06-20'), -- Compra de Monitores/Celulares
+('2026-06-22 12:30:00', 9, 740000.00,  'C-0001-00002222', '2026-06-21'), -- Compra de Accesorios Razer
+('2026-06-23 09:00:00', 10, 2405000.00,'A-0008-00003333', '2026-06-22'), -- Compra de PS5 y Mandos
+('2026-06-23 15:45:00', 2, 680000.00,  'A-0004-00004444', '2026-06-23'), -- Compra de Notebooks Base
+('2026-06-24 11:20:00', 5, 595000.00,  'A-0002-00005555', '2026-06-23'), -- Compra de Memorias/Fuentes
+('2026-06-25 10:30:00', 6, 425000.00,  'B-0001-00006666', '2026-06-24'); -- Compra de Webcams
 
 -- ============================================================================
 -- 8. TABLA: Ventas (10 Facturas emitidas por Vendedores a Clientes)

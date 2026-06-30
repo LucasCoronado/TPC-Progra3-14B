@@ -1,4 +1,4 @@
-﻿using Dominio;
+using Dominio;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -35,6 +35,7 @@ namespace TPComercio
                         {
                             lblFecha.Text = compraObj.Fecha.ToString("dd/MM/yyyy");
                             lblFactura.Text = compraObj.FacturaAsociada != null && !string.IsNullOrEmpty(compraObj.FacturaAsociada.NumeroFactura) ? compraObj.FacturaAsociada.NumeroFactura : "Sin Factura";
+                            lblFechaFactura.Text = compraObj.FacturaAsociada != null && compraObj.FacturaAsociada.FechaEmision != DateTime.MinValue ? compraObj.FacturaAsociada.FechaEmision.ToString("dd/MM/yyyy") : "-";
                             lblProveedor.Text = compraObj.ProveedorAsociado.RazonSocial;
                             lblTotal.Text = compraObj.Total.ToString("C");
                         }
