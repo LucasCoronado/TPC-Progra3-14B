@@ -35,6 +35,25 @@ namespace TPComercio
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Request.QueryString["descargar"] == "1")
+            {
+                if (Session["Ticket_Numero"] != null)
+                {
+                    string num = Session["Ticket_Numero"].ToString();
+                    string cli = Session["Ticket_Cliente"].ToString();
+                    decimal tot = (decimal)Session["Ticket_Total"];
+                    List<DetalleVenta> det = (List<DetalleVenta>)Session["Ticket_Detalle"];
+                    
+                    Session.Remove("Ticket_Numero");
+                    Session.Remove("Ticket_Cliente");
+                    Session.Remove("Ticket_Total");
+                    Session.Remove("Ticket_Detalle");
+                    
+                    GenerarTicketPDF(num, cli, tot, det);
+                }
+            }
+
             if (!IsPostBack)
             {
                 txtFecha.Text = DateTime.Now.ToString("dd/MM/yyyy");
@@ -97,7 +116,7 @@ namespace TPComercio
 
                 if (cantidadTotalRequerida > stockActual)
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "setTimeout(function(){ alert('No hay suficiente stock disponible. Stock máximo: " + stockActual + "'); }, 100);", true);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "setTimeout(function(){ alert('No hay suficiente stock disponible. Stock disponible: " + stockActual + "'); }, 100);", true);
                     return;
                 }
 
@@ -166,18 +185,22 @@ namespace TPComercio
                 VentaNegocio negocioVenta = new VentaNegocio();
 
                 string nuevoNumero = negocioVenta.GenerarProximoNumero();
-
+                
                 int idNuevaVenta = negocioVenta.GenerarVenta(idCliente, idUsuario, nuevoNumero, totalFinal, CarritoSession);
+
+                Session["Ticket_Numero"] = nuevoNumero;
+                Session["Ticket_Cliente"] = ddlClientes.SelectedItem.Text;
+                Session["Ticket_Total"] = totalFinal;
+                Session["Ticket_Detalle"] = new List<DetalleVenta>(CarritoSession);
 
                 Session["Carrito"] = null;
                 dgvDetalle.DataSource = null;
                 dgvDetalle.DataBind();
                 lblTotal.Text = "Total: $0";
-
-               
                 btnBuscar_Click(null, null);
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "setTimeout(function(){ alert('Venta registrada correctamente con ID: " + idNuevaVenta + "'); }, 500);", true);
+                
+                string script = "alert('Venta registrada correctamente con ID: " + idNuevaVenta + "'); window.location.href = 'NuevaVenta.aspx?descargar=1';";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaPDF", script, true);
             }
             catch (Exception ex)
             {
