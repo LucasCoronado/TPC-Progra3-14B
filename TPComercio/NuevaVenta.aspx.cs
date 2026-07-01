@@ -50,7 +50,7 @@ namespace TPComercio
                     Session.Remove("Ticket_Total");
                     Session.Remove("Ticket_Detalle");
                     
-                    GenerarTicketPDF(num, cli, tot, det);
+                    TicketHelper.GenerarTicketPDF(num, cli, tot, det);
                 }
             }
 
@@ -225,58 +225,6 @@ namespace TPComercio
             lblTotal.Text = $"Total: {total:C}";
         }
 
-
-        private void GenerarTicketPDF(string numeroVenta, string nombreCliente, decimal totalVenta, List<DetalleVenta> detalle)
-        {
-            //Tamaño y margenes de doc
-            Document doc = new Document(PageSize.A4, 30, 30, 30, 30);
-
-            
-            MemoryStream ms = new MemoryStream();
-            PdfWriter writer = PdfWriter.GetInstance(doc, ms);
-
-            
-            doc.Open();
-
-           
-            doc.Add(new Paragraph($"TICKET DE VENTA: {numeroVenta}"));
-            doc.Add(new Paragraph($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}"));
-            doc.Add(new Paragraph($"Cliente: {nombreCliente}\n\n"));
-
-            
-            PdfPTable tabla = new PdfPTable(4);
-
-           
-            tabla.AddCell("Producto");
-            tabla.AddCell("Cant.");
-            tabla.AddCell("Precio U.");
-            tabla.AddCell("Subtotal");
-
-           
-            foreach (var item in detalle)
-            {
-                tabla.AddCell(item.NombreProducto);
-                tabla.AddCell(item.Cantidad.ToString());
-                tabla.AddCell(item.PrecioUnitario.ToString("C"));
-                tabla.AddCell((item.Cantidad * item.PrecioUnitario).ToString("C"));
-            }
-
-            doc.Add(tabla);
-
-         
-            doc.Add(new Paragraph($"\nTOTAL A PAGAR: {totalVenta:C}"));
-
-            doc.Close();
-
-            //Descarga en navegador
-            Response.Clear();
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("content-disposition", $"attachment;filename=Ticket_{numeroVenta}.pdf");
-            Response.Buffer = true;
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.BinaryWrite(ms.ToArray());
-            Response.End();
-        }
 
     }
 }

@@ -230,6 +230,7 @@
     <Compile Include="Usuarios.aspx.designer.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TicketHelper.cs" />
     <Compile Include="AjusteStock.aspx.cs">
       <DependentUpon>AjusteStock.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
