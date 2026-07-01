@@ -201,6 +201,9 @@ namespace TPComercio
                 
                 string script = "alert('Venta registrada correctamente con ID: " + idNuevaVenta + "'); window.location.href = 'NuevaVenta.aspx?descargar=1';";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alertaPDF", script, true);
+
+                
+
             }
             catch (Exception ex)
             {

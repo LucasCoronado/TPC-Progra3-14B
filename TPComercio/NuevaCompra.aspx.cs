@@ -81,7 +81,9 @@ namespace TPComercio
 
             if (carrito == null || carrito.Count == 0)
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('El carrito está vacío. Agregue productos antes de confirmar.');", true);
+                //ClientScript.RegisterStartupScript(this.GetType(), "alert", "setTimeout(function(){alert('El carrito está vacío. Agregue productos antes de confirmar.');},100);", true);
+
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "setTimeout(function(){ alert('El carrito está vacío. Agregue productos antes de confirmar.'); }, 100);", true);
                 return;
             }
 

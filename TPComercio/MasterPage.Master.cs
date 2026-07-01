@@ -11,15 +11,16 @@ namespace TPComercio
 {
     public partial class Site1 : System.Web.UI.MasterPage
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
-
             if (!Seguridad.sesionActiva(Session["usuario"]))
             {
-                Response.Redirect("Login.aspx", false);
-                return;
+                Response.Redirect("Login.aspx", true);
             }
-            
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
             if (Seguridad.sesionActiva(Session["usuario"]))
             {
                 Usuario user = (Usuario)Session["usuario"];
