@@ -1,4 +1,4 @@
-﻿using Dominio;
+using Dominio;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -80,22 +80,28 @@ namespace TPComercio
                 }
 
                 int stockActual = Convert.ToInt32(row.Cells[3].Text);
-                if (cantidad > stockActual)
-                {
-                    return;
-                }
-
-                string nombreProducto = row.Cells[2].Text;
-                decimal precioVenta = Convert.ToDecimal(row.Cells[4].Text);
+                string nombreProducto = HttpUtility.HtmlDecode(row.Cells[2].Text);
+                decimal precioVenta = decimal.Parse(row.Cells[4].Text, System.Globalization.NumberStyles.Currency);
 
                 List<DetalleVenta> carritoTemporal = CarritoSession;
-
                 DetalleVenta itemExistente = carritoTemporal.Find(x => x.Id == idProducto);
+
+                int cantidadTotalRequerida = cantidad;
+                if (itemExistente != null)
+                {
+                    cantidadTotalRequerida += itemExistente.Cantidad;
+                }
+
+                if (cantidadTotalRequerida > stockActual)
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "setTimeout(function(){ alert('No hay suficiente stock disponible. Stock máximo: " + stockActual + "'); }, 100);", true);
+                    return;
+                }
 
                 if (itemExistente != null)
                 {
                     itemExistente.Cantidad += cantidad;
-                    //itemExistente.Subtotal = itemExistente.Cantidad * itemExistente.PrecioUnitario;
+                  
                 }
                 else
                 {
@@ -104,7 +110,7 @@ namespace TPComercio
                     nuevoDetalle.NombreProducto = nombreProducto;
                     nuevoDetalle.Cantidad = cantidad;
                     nuevoDetalle.PrecioUnitario = precioVenta;
-                    //nuevoDetalle.Subtotal = cantidad * precioVenta;
+                   
 
                     carritoTemporal.Add(nuevoDetalle);
                 }
@@ -112,6 +118,7 @@ namespace TPComercio
                 CarritoSession = carritoTemporal;
 
                 ActualizarPantallaCarrito();
+                txtCantidad.Text = "1";
             }
         }
         protected void dgvDetalle_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -163,11 +170,15 @@ namespace TPComercio
                 dgvDetalle.DataSource = null;
                 dgvDetalle.DataBind();
                 lblTotal.Text = "Total: $0";
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Venta registrada correctamente con ID: " + idNuevaVenta + "');", true);
+
+               
+                btnBuscar_Click(null, null);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "setTimeout(function(){ alert('Venta registrada correctamente con ID: " + idNuevaVenta + "'); }, 500);", true);
             }
             catch (Exception ex)
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "error", "alert('Error al procesar la venta: " + ex.Message + "');", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "error", "alert('Error al procesar la venta: " + ex.Message + "');", true);
             }
         }
 
