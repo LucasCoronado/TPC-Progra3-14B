@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TPComercio.Negocio;
 
 namespace TPComercio
 {
@@ -11,7 +13,18 @@ namespace TPComercio
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                ProductoNegocio pNeg = new ProductoNegocio();
+                ClienteNegocio cNeg = new ClienteNegocio();
+                VentaNegocio vNeg = new VentaNegocio();
+                ProveedorNegocio prNeg = new ProveedorNegocio();
 
+                lblTotalProductos.Text = pNeg.ContarProductos().ToString();
+                lblTotalClientes.Text = cNeg.ContarClientes().ToString();
+                lblTotalVentas.Text = vNeg.ContarVentas().ToString();
+                lblTotalProveedores.Text = prNeg.ContarProveedores().ToString();
+            }
         }
     }
 }

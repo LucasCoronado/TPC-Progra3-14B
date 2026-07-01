@@ -112,5 +112,20 @@ namespace Datos
                 datos.cerrarConexion();
             }
         }
+        public int Contar()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Proveedores");
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                    return (int)datos.Lector[0];
+
+                return 0;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
+        }
     }
 }

@@ -186,5 +186,12 @@ namespace TPComercio.Negocio
             catch (Exception ex) { throw ex; }
             finally { datos.cerrarConexion(); }
         }
+
+        public int ContarProductos()
+        {
+            ProductoDatos datos = new ProductoDatos();
+            return datos.Contar();
+        }
+
     }
 }

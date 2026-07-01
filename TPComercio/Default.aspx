@@ -15,22 +15,22 @@ Dashboard
 
     <div class="bg-white p-6 rounded-xl shadow">
         <h3 class="text-gray-500">Productos</h3>
-        <p class="text-4xl font-bold mt-3">125</p>
+        <asp:Label ID="lblTotalProductos" runat="server" CssClass="text-3xl font-bold">0</asp:Label>
     </div>
 
     <div class="bg-white p-6 rounded-xl shadow">
         <h3 class="text-gray-500">Clientes</h3>
-        <p class="text-4xl font-bold mt-3">56</p>
+        <asp:Label ID="lblTotalClientes" runat="server" CssClass="text-3xl font-bold">0</asp:Label>
     </div>
 
     <div class="bg-white p-6 rounded-xl shadow">
         <h3 class="text-gray-500">Ventas</h3>
-        <p class="text-4xl font-bold mt-3">84</p>
+        <asp:Label ID="lblTotalVentas" runat="server" CssClass="text-3xl font-bold">0</asp:Label>
     </div>
 
     <div class="bg-white p-6 rounded-xl shadow">
         <h3 class="text-gray-500">Proveedores</h3>
-        <p class="text-4xl font-bold mt-3">18</p>
+        <asp:Label ID="lblTotalProveedores" runat="server" CssClass="text-3xl font-bold">0</asp:Label>
     </div>
 
 </div>

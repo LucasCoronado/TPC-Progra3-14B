@@ -1,3 +1,4 @@
+using Datos;
 using Dominio;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,12 @@ namespace Negocio
         {
             VentaDatos datos = new VentaDatos();
             return datos.ObtenerVentaPorId(idVenta);
+        }
+
+        public int ContarVentas()
+        {
+            VentaDatos datos = new VentaDatos();
+            return datos.Contar();
         }
     }
 }

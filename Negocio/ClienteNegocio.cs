@@ -73,5 +73,11 @@ namespace TPComercio.Negocio
                 throw ex;
             }
         }
+
+        public int ContarClientes()
+        {
+            ClienteDatos datos = new ClienteDatos();
+            return datos.Contar();
+        }
     }
 }

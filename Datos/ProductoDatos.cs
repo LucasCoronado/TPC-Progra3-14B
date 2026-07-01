@@ -214,5 +214,20 @@ namespace Datos
 
         }
 
+        public int Contar()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Productos WHERE Activo = 1");
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                    return (int)datos.Lector[0];
+
+                return 0;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
+        }
     }
 }

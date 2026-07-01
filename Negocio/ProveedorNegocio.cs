@@ -52,5 +52,11 @@ namespace TPComercio.Negocio
                 throw ex;
             }
         }
+
+        public int ContarProveedores()
+        {
+            ProveedorDatos datos = new ProveedorDatos();
+            return datos.Contar();
+        }
     }
 }
