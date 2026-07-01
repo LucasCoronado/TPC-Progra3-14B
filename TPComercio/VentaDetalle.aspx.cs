@@ -29,7 +29,7 @@ namespace TPComercio
                     {
                         lblNroVenta.Text = "#" + idVenta;
                         VentaNegocio negocio = new VentaNegocio();
-                        
+
                         Venta ventaObj = negocio.ObtenerVentaPorId(idVenta);
                         if (ventaObj != null)
                         {
@@ -52,6 +52,27 @@ namespace TPComercio
                 else
                 {
                     Response.Redirect("HistorialVentas.aspx", false);
+                }
+            }
+        }
+
+        protected void btnDescargarPDF_Click(object sender, EventArgs e)
+        {
+            if (Request.QueryString["id"] != null)
+            {
+                int idVenta;
+                if (int.TryParse(Request.QueryString["id"], out idVenta))
+                {
+                    VentaNegocio negocio = new VentaNegocio();
+                    Venta ventaObj = negocio.ObtenerVentaPorId(idVenta);
+                    if (ventaObj != null)
+                    {
+                        List<DetalleVenta> lista = negocio.ListarDetalles(idVenta);
+
+                        string numVenta = ventaObj.FacturaAsociada.NumeroFactura;
+                           
+                        TicketHelper.GenerarTicketPDF(numVenta, ventaObj.ClienteAsociado.Nombre, ventaObj.Total, lista, ventaObj.Fecha);
+                    }
                 }
             }
         }

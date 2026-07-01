@@ -10,7 +10,7 @@ namespace TPComercio
 {
     public static class TicketHelper
     {
-        public static void GenerarTicketPDF(string numeroVenta, string nombreCliente, decimal totalVenta, List<DetalleVenta> detalle)
+        public static void GenerarTicketPDF(string numeroVenta, string nombreCliente, decimal totalVenta, List<DetalleVenta> detalle, DateTime fechaVenta)
         {
             // Tamaño y margenes de doc
             Document doc = new Document(PageSize.A4, 30, 30, 30, 30);
@@ -21,7 +21,7 @@ namespace TPComercio
             doc.Open();
 
             doc.Add(new Paragraph($"TICKET DE VENTA: {numeroVenta}"));
-            doc.Add(new Paragraph($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}"));
+            doc.Add(new Paragraph($"Fecha: {fechaVenta:dd/MM/yyyy HH:mm}"));
             doc.Add(new Paragraph($"Cliente: {nombreCliente}\n\n"));
             
             PdfPTable tabla = new PdfPTable(4);

@@ -50,7 +50,7 @@ namespace TPComercio
                     Session.Remove("Ticket_Total");
                     Session.Remove("Ticket_Detalle");
                     
-                    TicketHelper.GenerarTicketPDF(num, cli, tot, det);
+                    TicketHelper.GenerarTicketPDF(num, cli, tot, det, DateTime.Now);
                 }
             }
 

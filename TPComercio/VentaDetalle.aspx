@@ -13,9 +13,12 @@
                 </h1>
                 <p class="text-slate-500 mt-2">Desglose de productos de la operación seleccionada.</p>
             </div>
-            <a href="HistorialVentas.aspx" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-lg transition-colors inline-block">
-                Volver al Historial
-            </a>
+            <div class="flex gap-4">
+                <asp:Button ID="btnDescargarPDF" runat="server" Text="Descargar PDF" CssClass="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-colors inline-block cursor-pointer" OnClick="btnDescargarPDF_Click" />
+                <a href="HistorialVentas.aspx" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-6 rounded-lg transition-colors inline-block">
+                    Volver al Historial
+                </a>
+            </div>
         </div>
 
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8 flex flex-wrap gap-8">
