@@ -24,6 +24,15 @@ namespace TPComercio
         protected global::System.Web.UI.WebControls.TextBox txtNuevaMarca;
 
         /// <summary>
+        /// lblError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
         /// btnAgregarMarca control.
         /// </summary>
         /// <remarks>
@@ -40,15 +49,6 @@ namespace TPComercio
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-
-        /// <summary>
-        /// lblError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
         /// dgvMarcas control.

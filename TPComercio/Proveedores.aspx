@@ -28,15 +28,14 @@
             <asp:TextBox runat="server" ID="txtEmailProveedor" CssClass="border p-2 rounded w-full mb-4" placeholder="Email"/>
         </div>
 
+        <div class="mb-6">
+            <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
+        </div>
+
         <asp:Button Text="Nuevo Proveedor" ID="btnAgregarProveedor" OnClick="btnAgregarProveedor_Click" runat="server" CssClass="bg-green-600 text-white px-4 py-2 rounded mb-5"/>
 
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-                
-                <div class="mb-4">
-                    <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
-                </div>
-
                 <asp:GridView ID="dgvProveedores" runat="server" CssClass="table table-auto w-full border" 
                     AutoGenerateColumns="false" DataKeyNames="Id"
                     OnRowEditing="dgvProveedores_RowEditing"

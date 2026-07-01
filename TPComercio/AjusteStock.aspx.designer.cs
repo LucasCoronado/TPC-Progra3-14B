@@ -11,52 +11,70 @@ namespace TPComercio
 {
 
 
-    public partial class Categorias
+    public partial class WebForm1
     {
 
         /// <summary>
-        /// txtNuevaCategoria control.
+        /// ddlProductos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNuevaCategoria;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProductos;
 
         /// <summary>
-        /// lblError control.
+        /// lblStockActual control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
+        protected global::System.Web.UI.WebControls.Label lblStockActual;
 
         /// <summary>
-        /// btnAgregarCategoria control.
+        /// txtCantidad control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarCategoria;
+        protected global::System.Web.UI.WebControls.TextBox txtCantidad;
 
         /// <summary>
-        /// UpdatePanel1 control.
+        /// ddlMotivos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMotivos;
 
         /// <summary>
-        /// dgvCategorias control.
+        /// btnConfirmar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvCategorias;
+        protected global::System.Web.UI.WebControls.Button btnConfirmar;
+
+        /// <summary>
+        /// btnVerHistorial control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVerHistorial;
+
+        /// <summary>
+        /// lblMensaje control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

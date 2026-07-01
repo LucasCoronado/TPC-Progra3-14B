@@ -32,6 +32,8 @@ namespace TPComercio
                     linkProductos.Visible = false;
                     linkProveedores.Visible = false;
                     linkHistorial.Visible = false;
+                    linkCompras.Visible = false;
+                    linkAjusteStock.Visible = false;
                 }
             }
 

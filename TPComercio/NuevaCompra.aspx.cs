@@ -13,6 +13,11 @@ namespace TPComercio
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Seguridad.esAdmin(Session["usuario"]))
+            {
+                Response.Redirect("Default.aspx", false);
+                return;
+            }
             if (!IsPostBack)
             {
                 txtFechaIngreso.Text = DateTime.Now.ToString("dd/MM/yyyy");

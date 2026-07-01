@@ -1,6 +1,7 @@
 ﻿using Datos;
 using System;
 using System.Collections.Generic;
+using TPComercio.Datos;
 using TPComercio.Dominio;
 
 namespace TPComercio.Negocio
@@ -114,6 +115,76 @@ namespace TPComercio.Negocio
             {
                 throw ex;
             }
+        }
+
+        public void AjustarStockManual(int idProducto, int cantidadAjuste, string motivo, int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT StockActual FROM Productos WHERE Id = @Id");
+                datos.setearParametro("@Id", idProducto);
+                int stockAnterior = (int)datos.ejecutarScalar();
+                int stockNuevo = stockAnterior + cantidadAjuste;
+
+                if (stockNuevo < 0)
+                    throw new Exception("El stock no puede quedar negativo.");
+
+                string consultaUnificada = @"INSERT INTO AuditoriaStock (IdProducto, IdUsuario, Fecha, CantidadCambio, Motivo, StockAnterior, StockNuevo) 
+                VALUES (@IdP, @IdU, GETDATE(), @Cant, @Mot, @StkAnt, @StkNuevo);
+
+                UPDATE Productos SET StockActual = @StkNuevo WHERE Id = @IdP;";
+
+                datos.setearConsulta(consultaUnificada);
+                datos.setearParametro("@IdP", idProducto);
+                datos.setearParametro("@IdU", idUsuario);
+                datos.setearParametro("@Cant", cantidadAjuste);
+                datos.setearParametro("@Mot", motivo);
+                datos.setearParametro("@StkAnt", stockAnterior);
+                datos.setearParametro("@StkNuevo", stockNuevo);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<AuditoriaStock> ListarAuditoria()
+        {
+            List<AuditoriaStock> lista = new List<AuditoriaStock>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@"SELECT A.Fecha, A.Motivo, A.CantidadCambio, A.StockAnterior, A.StockNuevo, 
+                               P.Nombre AS Producto, U.NombreUsuario AS Usuario
+                               FROM AuditoriaStock A
+                               JOIN Productos P ON A.IdProducto = P.Id
+                               JOIN Usuarios U ON A.IdUsuario = U.Id
+                               ORDER BY A.Fecha DESC");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    AuditoriaStock aux = new AuditoriaStock();
+                    aux.Fecha = (DateTime)datos.Lector["Fecha"];
+                    aux.Motivo = (string)datos.Lector["Motivo"];
+                    aux.CantidadCambio = (int)datos.Lector["CantidadCambio"];
+                    aux.StockAnterior = (int)datos.Lector["StockAnterior"];
+                    aux.StockNuevo = (int)datos.Lector["StockNuevo"];
+                    aux.Producto = (string)datos.Lector["Producto"];
+                    aux.Usuario = (string)datos.Lector["Usuario"];
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.cerrarConexion(); }
         }
     }
 }

@@ -60,6 +60,15 @@ namespace TPComercio
         protected global::System.Web.UI.HtmlControls.HtmlAnchor linkProductos;
 
         /// <summary>
+        /// linkAjusteStock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor linkAjusteStock;
+
+        /// <summary>
         /// linkClientes control.
         /// </summary>
         /// <remarks>

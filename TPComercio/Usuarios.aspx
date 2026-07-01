@@ -17,14 +17,13 @@
                 <asp:ListItem Text="Vendedor" Value="Vendedor"></asp:ListItem>
             </asp:DropDownList>
         </div>
+        <div class="mb-4">
+            <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
+        </div>
         <asp:Button Text="Agregar Usuario" ID="btnAgregarUsuario" OnClick="btnAgregarUsuario_Click" runat="server" CssClass="bg-blue-600 text-white px-4 py-2 rounded mb-1" />
 
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-                <div class="mb-4">
-                    <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
-                </div>
-
                 <asp:GridView ID="dgvUsuarios" runat="server" CssClass="table table-auto w-full border"
                     AutoGenerateColumns="false" DataKeyNames="Id"
                     OnRowEditing="dgvUsuarios_RowEditing"

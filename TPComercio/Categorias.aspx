@@ -12,16 +12,14 @@
         </h2>
 
         <asp:TextBox runat="server" ID="txtNuevaCategoria" CssClass="border p-2 rounded w-full mb-3" placeholder="Nombre de Categoria" />
-
+        <div class="mb-4">
+            <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
+        </div>
         <asp:Button Text="Agregar" ID="btnAgregarCategoria" OnClick="btnAgregarCategoria_Click" runat="server" CssClass="bg-blue-600 text-white px-4 py-2 rounded mb-3" />
 
 
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
-                <div class="mb-4">
-                    <asp:Label ID="lblError" runat="server" Text="" CssClass="text-red-600 font-bold"></asp:Label>
-                </div>
-
                 <asp:GridView ID="dgvCategorias" runat="server" CssClass="table table-auto w-full border"
                     AutoGenerateColumns="false" DataKeyNames="Id"
                     OnRowEditing="dgvCategorias_RowEditing"
